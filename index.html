@@ -10,23 +10,20 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --ink:        #1d1d1f;
-            --ink2:       #6e6e73;
-            --ink3:       #86868b;
-            --sep:        #d2d2d7;
-            --fill:       #f5f5f7;
-            --fill2:      #e8e8ed;
-            --white:      #ffffff;
+            --ink:   #1d1d1f;
+            --ink2:  #6e6e73;
+            --ink3:  #86868b;
+            --sep:   #d2d2d7;
+            --fill:  #f5f5f7;
+            --fill2: #e8e8ed;
+            --white: #ffffff;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--fill);
-            color: var(--ink);
-            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--fill); color: var(--ink); min-height: 100vh;
             -webkit-font-smoothing: antialiased;
         }
-
         .hidden { display: none !important; }
 
         /* ─── Header ─── */
@@ -37,28 +34,24 @@
             border-bottom: 0.5px solid var(--sep);
             position: sticky; top: 0; z-index: 50;
         }
-        .header-inner {
-            max-width: 560px; margin: 0 auto;
-            padding: 0 24px; height: 56px;
-            display: flex; align-items: center; justify-content: space-between;
+        .hdr {
+            max-width: 560px; margin: 0 auto; padding: 0 24px;
+            height: 56px; display: flex; align-items: center; justify-content: space-between;
         }
         .logo { display: flex; align-items: center; gap: 10px; }
         .logo-icon {
-            width: 32px; height: 32px; background: var(--ink);
-            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            width: 32px; height: 32px; background: var(--ink); border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
             color: #fff; font-size: 13px; flex-shrink: 0;
         }
-        .logo h1 {
-            font-size: 15px; font-weight: 600; letter-spacing: -0.3px;
-            color: var(--ink); line-height: 1.2;
-        }
-        #connection-badge { font-size: 10px; color: var(--ink3); font-weight: 400; }
-        .header-right { display: flex; align-items: center; gap: 8px; }
+        .logo h1 { font-size: 15px; font-weight: 600; letter-spacing: -0.3px; }
+        #connection-badge { font-size: 10px; color: var(--ink3); }
+        .hdr-r { display: flex; align-items: center; gap: 8px; }
         .icon-btn {
-            background: none; border: none; cursor: pointer;
-            color: var(--ink2); width: 36px; height: 36px; border-radius: 50%;
+            background: none; border: none; cursor: pointer; color: var(--ink2);
+            width: 36px; height: 36px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 17px; transition: background 0.15s;
+            font-size: 17px; transition: background .15s;
         }
         .icon-btn:hover { background: rgba(0,0,0,0.07); }
 
@@ -71,643 +64,517 @@
         .tab-btn {
             flex: 1; padding: 13px 0; font-size: 14px; font-weight: 500;
             text-align: center; background: none; border: none; cursor: pointer;
-            color: var(--ink2); border-bottom: 2px solid transparent;
-            margin-bottom: -0.5px; transition: all 0.2s; font-family: inherit;
-            letter-spacing: -0.1px;
+            color: var(--ink2); border-bottom: 2px solid transparent; margin-bottom: -0.5px;
+            transition: all .2s; font-family: inherit; letter-spacing: -0.1px;
         }
         .tab-btn i { margin-right: 6px; font-size: 12px; }
         .tab-btn.active { color: var(--ink); border-bottom-color: var(--ink); }
 
         /* ─── Main ─── */
         main { max-width: 560px; margin: 0 auto; padding: 36px 24px 96px; }
-
         .eyebrow {
-            font-size: 11px; font-weight: 600; letter-spacing: 0.07em;
+            font-size: 11px; font-weight: 600; letter-spacing: .07em;
             color: var(--ink3); text-transform: uppercase; margin-bottom: 6px;
         }
-        .section-title {
-            font-size: 30px; font-weight: 700; letter-spacing: -0.6px;
+        .sec-title {
+            font-size: 30px; font-weight: 700; letter-spacing: -.6px;
             color: var(--ink); line-height: 1.1; margin-bottom: 28px;
         }
+
+        /* ─── Setup Banner ─── */
+        .setup-banner {
+            background: var(--white); border-radius: 16px; padding: 32px 24px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,.05), 0 0 0 .5px rgba(0,0,0,.08);
+        }
+        .setup-banner .sb-icon {
+            width: 56px; height: 56px; background: var(--fill); border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 16px; font-size: 22px; color: var(--ink2);
+        }
+        .setup-banner h3 { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
+        .setup-banner p  { font-size: 13px; color: var(--ink2); line-height: 1.6; margin-bottom: 20px; }
+        .setup-banner button {
+            background: var(--ink); color: #fff; border: none; border-radius: 980px;
+            padding: 12px 28px; font-size: 14px; font-weight: 600; font-family: inherit;
+            cursor: pointer; transition: background .18s;
+        }
+        .setup-banner button:hover { background: #333; }
 
         /* ─── Card ─── */
         .card {
             background: var(--white); border-radius: 20px; padding: 28px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 0 0 0.5px rgba(0,0,0,0.08);
+            box-shadow: 0 1px 3px rgba(0,0,0,.05), 0 0 0 .5px rgba(0,0,0,.08);
         }
 
         /* ─── Form ─── */
-        .fgroup { margin-bottom: 20px; }
-        .flabel {
-            display: block; font-size: 12px; font-weight: 600;
-            color: var(--ink2); margin-bottom: 8px; letter-spacing: 0.02em;
-            text-transform: uppercase;
+        .fg { margin-bottom: 20px; }
+        .fl {
+            display: block; font-size: 12px; font-weight: 600; color: var(--ink2);
+            margin-bottom: 8px; letter-spacing: .02em; text-transform: uppercase;
         }
-        .flabel .req { color: #ff3b30; margin-left: 2px; }
-
-        .finput, .fselect, .ftextarea {
-            width: 100%; padding: 13px 16px;
-            border: 1px solid var(--sep); border-radius: 12px;
-            font-size: 15px; font-family: inherit; color: var(--ink);
-            background: var(--fill); outline: none; transition: all 0.2s;
-            appearance: none; -webkit-appearance: none;
+        .fl .req { color: #ff3b30; margin-left: 2px; }
+        .fi, .fs, .ft {
+            width: 100%; padding: 13px 16px; border: 1px solid var(--sep); border-radius: 12px;
+            font-size: 15px; font-family: inherit; color: var(--ink); background: var(--fill);
+            outline: none; transition: all .2s; appearance: none; -webkit-appearance: none;
         }
-        .finput:focus, .fselect:focus, .ftextarea:focus {
-            border-color: var(--ink); background: var(--white);
-            box-shadow: 0 0 0 3px rgba(0,0,0,0.07);
+        .fi:focus, .fs:focus, .ft:focus {
+            border-color: var(--ink); background: var(--white); box-shadow: 0 0 0 3px rgba(0,0,0,.07);
         }
-        .ftextarea { resize: none; line-height: 1.55; }
-
-        .select-wrap { position: relative; }
-        .select-wrap::after {
-            content: '';
-            position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+        .ft { resize: none; line-height: 1.55; }
+        .sw { position: relative; }
+        .sw::after {
+            content: ''; position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
             border-left: 4.5px solid transparent; border-right: 4.5px solid transparent;
             border-top: 5px solid var(--ink2); pointer-events: none;
         }
-
         .ferr { font-size: 12px; color: #ff3b30; margin-top: 6px; display: none; }
         .ferr.show { display: block; }
 
         /* ─── Upload ─── */
-        .upload-label {
-            display: flex; flex-direction: column; align-items: center;
-            justify-content: center; width: 100%; height: 136px;
-            border: 1.5px dashed var(--sep); border-radius: 14px;
-            background: var(--fill); cursor: pointer;
-            transition: all 0.2s; position: relative; overflow: hidden;
+        .uplabel {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            width: 100%; height: 136px; border: 1.5px dashed var(--sep); border-radius: 14px;
+            background: var(--fill); cursor: pointer; transition: all .2s;
+            position: relative; overflow: hidden;
         }
-        .upload-label:hover { border-color: var(--ink); background: rgba(0,0,0,0.03); }
-        .upload-icon { font-size: 22px; color: var(--ink3); margin-bottom: 8px; }
-        .upload-text { font-size: 13px; font-weight: 500; color: var(--ink2); }
-        .upload-sub { font-size: 11px; color: var(--ink3); margin-top: 3px; }
-        #preview-img {
-            position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-        }
+        .uplabel:hover { border-color: var(--ink); background: rgba(0,0,0,.03); }
+        .up-icon { font-size: 22px; color: var(--ink3); margin-bottom: 8px; }
+        .up-text { font-size: 13px; font-weight: 500; color: var(--ink2); }
+        .up-sub  { font-size: 11px; color: var(--ink3); margin-top: 3px; }
+        #preview-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
         #remove-img-btn {
             background: none; border: none; cursor: pointer; font-size: 12px;
-            color: #ff3b30; margin-top: 8px; font-family: inherit;
-            font-weight: 500; display: none;
+            color: #ff3b30; margin-top: 8px; font-family: inherit; font-weight: 500; display: none;
         }
 
-        /* ─── Primary Button ─── */
+        /* ─── Buttons ─── */
         .btn-primary {
-            width: 100%; background: var(--ink); color: var(--white);
-            border: none; border-radius: 980px; padding: 16px 24px;
-            font-size: 15px; font-weight: 600; font-family: inherit; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            transition: all 0.2s; letter-spacing: -0.1px; margin-top: 8px;
+            width: 100%; background: var(--ink); color: var(--white); border: none;
+            border-radius: 980px; padding: 16px 24px; font-size: 15px; font-weight: 600;
+            font-family: inherit; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; gap: 8px; transition: all .2s;
+            letter-spacing: -.1px; margin-top: 8px;
         }
         .btn-primary:hover { background: #333; transform: scale(1.005); }
-        .btn-primary:active { transform: scale(0.995); }
-        .btn-primary:disabled {
-            background: var(--fill2); color: var(--ink3);
-            cursor: not-allowed; transform: none;
-        }
+        .btn-primary:active { transform: scale(.995); }
+        .btn-primary:disabled { background: var(--fill2); color: var(--ink3); cursor: not-allowed; transform: none; }
 
         /* ─── Status ─── */
         .search-row { display: flex; gap: 10px; margin-bottom: 16px; }
-        .search-wrap { flex: 1; position: relative; }
-        .search-wrap i {
-            position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-            color: var(--ink3); font-size: 13px; pointer-events: none;
+        .sw2 { flex: 1; position: relative; }
+        .sw2 i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--ink3); font-size: 13px; pointer-events: none; }
+        .search-inp {
+            width: 100%; padding: 12px 16px 12px 38px; border: 1px solid var(--sep);
+            border-radius: 12px; background: var(--white); font-size: 14px;
+            font-family: inherit; color: var(--ink); outline: none; transition: all .2s;
         }
-        .search-input {
-            width: 100%; padding: 12px 16px 12px 38px;
-            border: 1px solid var(--sep); border-radius: 12px;
-            background: var(--white); font-size: 14px; font-family: inherit;
-            color: var(--ink); outline: none; transition: all 0.2s;
-        }
-        .search-input:focus {
-            border-color: var(--ink); box-shadow: 0 0 0 3px rgba(0,0,0,0.07);
-        }
+        .search-inp:focus { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(0,0,0,.07); }
         .refresh-btn {
-            background: var(--white); border: 1px solid var(--sep);
-            border-radius: 12px; width: 44px; height: 44px;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; color: var(--ink2); transition: all 0.2s; flex-shrink: 0;
+            background: var(--white); border: 1px solid var(--sep); border-radius: 12px;
+            width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; color: var(--ink2); transition: all .2s; flex-shrink: 0;
         }
         .refresh-btn:hover { border-color: var(--ink); color: var(--ink); }
-
-        .filter-row {
-            display: flex; gap: 8px; margin-bottom: 22px;
-            overflow-x: auto; padding-bottom: 2px;
-        }
+        .filter-row { display: flex; gap: 8px; margin-bottom: 22px; overflow-x: auto; padding-bottom: 2px; }
         .filter-row::-webkit-scrollbar { display: none; }
         .filter-chip {
-            white-space: nowrap; font-size: 12px; font-weight: 500;
-            padding: 6px 15px; border-radius: 980px;
-            border: 1px solid var(--sep); background: var(--white);
-            color: var(--ink2); cursor: pointer; font-family: inherit; transition: all 0.18s;
+            white-space: nowrap; font-size: 12px; font-weight: 500; padding: 6px 15px;
+            border-radius: 980px; border: 1px solid var(--sep); background: var(--white);
+            color: var(--ink2); cursor: pointer; font-family: inherit; transition: all .18s;
         }
         .filter-chip.active { background: var(--ink); color: var(--white); border-color: var(--ink); }
 
         /* ─── Repair Card ─── */
-        .repair-card {
+        .rc {
             background: var(--white); border-radius: 16px; padding: 20px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.05), 0 0 0 0.5px rgba(0,0,0,0.07);
+            box-shadow: 0 1px 4px rgba(0,0,0,.05), 0 0 0 .5px rgba(0,0,0,.07);
             margin-bottom: 12px;
         }
         .rc-top { display: flex; align-items: flex-start; gap: 14px; }
         .rc-icon {
-            background: var(--fill); border-radius: 12px;
-            width: 44px; height: 44px; display: flex;
-            align-items: center; justify-content: center;
+            background: var(--fill); border-radius: 12px; width: 44px; height: 44px;
+            display: flex; align-items: center; justify-content: center;
             flex-shrink: 0; color: var(--ink2); font-size: 16px;
         }
         .rc-info { flex: 1; min-width: 0; }
-        .rc-title-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-        .rc-title { font-size: 15px; font-weight: 600; color: var(--ink); letter-spacing: -0.2px; line-height: 1.3; }
-        .status-badge {
-            flex-shrink: 0; font-size: 11px; font-weight: 600;
-            padding: 3px 10px; border-radius: 980px; letter-spacing: 0.01em;
-        }
-        .badge-pending  { background: #fff3cd; color: #7d5a00; }
-        .badge-progress { background: #e3eeff; color: #0040a0; }
-        .badge-done     { background: #d4f1e3; color: #0a5c36; }
-
+        .rc-tr { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+        .rc-title { font-size: 15px; font-weight: 600; color: var(--ink); letter-spacing: -.2px; line-height: 1.3; }
+        .sbadge { flex-shrink: 0; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 980px; }
+        .b-wait { background: #fff3cd; color: #7d5a00; }
+        .b-work { background: #e3eeff; color: #0040a0; }
+        .b-done { background: #d4f1e3; color: #0a5c36; }
         .rc-note { font-size: 13px; color: var(--ink2); margin-top: 5px; line-height: 1.55; }
         .rc-img {
-            width: 100%; height: 156px; border-radius: 12px;
-            overflow: hidden; margin-top: 14px; background: var(--fill); cursor: pointer;
+            width: 100%; height: 156px; border-radius: 12px; overflow: hidden;
+            margin-top: 14px; background: var(--fill); cursor: pointer;
         }
-        .rc-img img {
-            width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s;
-            display: block;
-        }
+        .rc-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .3s; display: block; }
         .rc-img img:hover { transform: scale(1.04); }
-        .rc-footer {
+        .rc-foot {
             display: flex; justify-content: space-between; align-items: center;
             margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--fill);
         }
         .rc-meta { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--ink3); }
 
         /* ─── Empty / Loading ─── */
-        .empty-state, .loading-state {
-            text-align: center; padding: 64px 0; color: var(--ink3);
-        }
-        .empty-state i, .loading-state i {
-            font-size: 36px; display: block; margin-bottom: 12px;
-        }
+        .empty-state, .loading-state { text-align: center; padding: 64px 0; color: var(--ink3); }
+        .empty-state i, .loading-state i { font-size: 36px; display: block; margin-bottom: 12px; }
         .empty-state p, .loading-state p { font-size: 15px; font-weight: 500; }
 
         /* ─── Toast ─── */
         #toast {
             position: fixed; bottom: 32px; left: 50%;
             transform: translateX(-50%) translateY(16px);
-            padding: 11px 20px; border-radius: 980px;
-            color: white; font-size: 14px; font-weight: 500; z-index: 100;
+            padding: 11px 20px; border-radius: 980px; color: white;
+            font-size: 14px; font-weight: 500; z-index: 100;
             display: flex; align-items: center; gap: 8px;
             opacity: 0; pointer-events: none; white-space: nowrap;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.22);
-            transition: all 0.3s cubic-bezier(0.34, 1.42, 0.64, 1);
+            box-shadow: 0 4px 20px rgba(0,0,0,.22);
+            transition: all .3s cubic-bezier(0.34, 1.42, 0.64, 1);
         }
         #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
         /* ─── Modal ─── */
         .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+            position: fixed; inset: 0; background: rgba(0,0,0,.4);
             backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-            z-index: 200; display: none;
-            align-items: flex-end; justify-content: center;
-            padding: 0;
+            z-index: 200; display: none; align-items: flex-end; justify-content: center;
         }
-        @media (min-width: 560px) {
-            .modal-overlay { align-items: center; padding: 24px; }
-            .modal { border-radius: 20px !important; }
-        }
+        @media (min-width: 560px) { .modal-overlay { align-items: center; padding: 24px; } .modal { border-radius: 20px !important; } }
         .modal-overlay.open { display: flex; }
         .modal {
             background: var(--white); width: 100%; max-width: 480px; max-height: 90vh;
             overflow-y: auto; padding: 28px 24px 40px;
             border-radius: 20px 20px 0 0;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.22);
-            animation: slideUp 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+            box-shadow: 0 20px 60px rgba(0,0,0,.22);
+            animation: slideUp .3s cubic-bezier(0.34, 1.2, 0.64, 1);
         }
         @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-        .modal-title { font-size: 20px; font-weight: 700; letter-spacing: -0.4px; }
+        .modal-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .modal-title { font-size: 20px; font-weight: 700; letter-spacing: -.4px; }
         .close-btn {
-            background: var(--fill); border: none; width: 28px; height: 28px;
-            border-radius: 50%; cursor: pointer; color: var(--ink2);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 12px; transition: all 0.15s;
+            background: var(--fill); border: none; width: 28px; height: 28px; border-radius: 50%;
+            cursor: pointer; color: var(--ink2); display: flex; align-items: center; justify-content: center;
+            font-size: 12px; transition: all .15s;
         }
         .close-btn:hover { background: var(--fill2); color: var(--ink); }
 
-        .code-block {
-            background: #1d1d1f; border-radius: 14px; padding: 18px; margin-bottom: 18px;
+        /* Steps inside modal */
+        .steps {
+            background: #1d1d1f; border-radius: 14px; padding: 18px; margin-bottom: 20px;
         }
-        .code-block-head {
-            font-size: 11px; font-weight: 600; color: #86868b;
-            margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
-            letter-spacing: 0.04em; text-transform: uppercase;
+        .steps-head {
+            font-size: 11px; font-weight: 600; color: #86868b; margin-bottom: 12px;
+            display: flex; align-items: center; gap: 6px; letter-spacing: .04em; text-transform: uppercase;
         }
-        .code-block ol {
-            list-style: decimal; padding-left: 18px;
-            color: #a1a1a6; font-size: 12px; line-height: 1.9;
-        }
-        .code-block ol li strong { color: #e8e8ed; }
-        .code-block ol li .green { color: #32d74b; }
-
-        .repo-pill {
-            background: var(--fill); border-radius: 12px; padding: 12px 16px;
-            display: flex; align-items: center; gap: 10px;
-            font-size: 13px; color: var(--ink2); margin-bottom: 20px;
-        }
-        .repo-pill strong { color: var(--ink); }
+        .steps ol { list-style: decimal; padding-left: 18px; color: #a1a1a6; font-size: 12px; line-height: 2; }
+        .steps ol li strong { color: #e8e8ed; }
+        .steps ol li .g { color: #32d74b; }
+        .steps ol li .url { color: #64d2ff; font-family: monospace; font-size: 11px; word-break: break-all; }
 
         .mfield { margin-bottom: 16px; }
-        .mfield label {
-            display: block; font-size: 12px; font-weight: 600;
-            color: var(--ink2); margin-bottom: 7px;
-            letter-spacing: 0.03em; text-transform: uppercase;
+        .mfield label { display: block; font-size: 12px; font-weight: 600; color: var(--ink2); margin-bottom: 7px; letter-spacing: .03em; text-transform: uppercase; }
+        .mfield .minput {
+            width: 100%; padding: 12px 16px; border: 1px solid var(--sep); border-radius: 12px;
+            font-size: 13px; font-family: monospace; background: var(--fill); color: var(--ink);
+            outline: none; transition: all .2s;
         }
-        .token-wrap { position: relative; }
-        .token-input {
-            width: 100%; padding: 12px 44px 12px 16px;
-            border: 1px solid var(--sep); border-radius: 12px;
-            font-size: 13px; font-family: 'SF Mono', 'Fira Code', monospace;
-            background: var(--fill); color: var(--ink); outline: none; transition: all 0.2s;
-        }
-        .token-input:focus {
-            border-color: var(--ink); background: var(--white);
-            box-shadow: 0 0 0 3px rgba(0,0,0,0.07);
-        }
-        .token-eye {
-            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
-            background: none; border: none; cursor: pointer; color: var(--ink3); font-size: 14px;
-        }
-        .helper { font-size: 11px; color: var(--ink3); margin-top: 6px; }
+        .mfield .minput:focus { border-color: var(--ink); background: var(--white); box-shadow: 0 0 0 3px rgba(0,0,0,.07); }
+        .mfield .helper { font-size: 11px; color: var(--ink3); margin-top: 6px; line-height: 1.5; }
 
         .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
         .btn-outline {
-            flex: 1; padding: 13px; border: 1px solid var(--sep);
-            border-radius: 980px; background: var(--white);
-            color: var(--ink); font-size: 14px; font-weight: 500;
-            font-family: inherit; cursor: pointer; transition: all 0.18s;
+            flex: 1; padding: 13px; border: 1px solid var(--sep); border-radius: 980px;
+            background: var(--white); color: var(--ink); font-size: 14px; font-weight: 500;
+            font-family: inherit; cursor: pointer; transition: all .18s;
         }
         .btn-outline:hover { background: var(--fill); }
         .btn-dark {
-            flex: 1; padding: 13px; border: none;
-            border-radius: 980px; background: var(--ink);
-            color: var(--white); font-size: 14px; font-weight: 600;
-            font-family: inherit; cursor: pointer; transition: all 0.18s;
+            flex: 1; padding: 13px; border: none; border-radius: 980px; background: var(--ink);
+            color: var(--white); font-size: 14px; font-weight: 600; font-family: inherit;
+            cursor: pointer; transition: all .18s;
         }
         .btn-dark:hover { background: #333; }
-        .modal-status {
-            border-top: 0.5px solid var(--sep); padding-top: 16px; margin-top: 16px;
-            font-size: 12px; color: var(--ink3);
-        }
+        .modal-status { border-top: .5px solid var(--sep); padding-top: 14px; margin-top: 16px; font-size: 12px; color: var(--ink3); }
         .modal-status strong { color: var(--ink); }
 
         /* ─── Lightbox ─── */
         #lightbox {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.92);
-            z-index: 400; display: none;
-            align-items: center; justify-content: center; padding: 24px;
+            position: fixed; inset: 0; background: rgba(0,0,0,.92); z-index: 400;
+            display: none; align-items: center; justify-content: center; padding: 24px;
         }
         #lightbox.open { display: flex; }
-        #lightbox-close {
-            position: absolute; top: 20px; right: 20px;
-            background: rgba(255,255,255,0.14); border: none; color: #fff;
-            width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
-            font-size: 13px; display: flex; align-items: center; justify-content: center;
-            transition: background 0.18s;
+        #lb-close {
+            position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,.14);
+            border: none; color: #fff; width: 36px; height: 36px; border-radius: 50%;
+            cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center;
+            transition: background .18s;
         }
-        #lightbox-close:hover { background: rgba(255,255,255,0.25); }
+        #lb-close:hover { background: rgba(255,255,255,.25); }
         #lightbox-img { max-width: 100%; max-height: 100%; border-radius: 12px; object-fit: contain; }
 
-        /* ─── Fade animation ─── */
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-        .fade-up { animation: fadeUp 0.28s ease-out forwards; }
+        .fade-up { animation: fadeUp .28s ease-out forwards; }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header>
-        <div class="header-inner">
-            <div class="logo">
-                <div class="logo-icon"><i class="fas fa-tools"></i></div>
-                <div>
-                    <h1>FixIt Classroom</h1>
-                    <span id="connection-badge">○ โหมด Demo</span>
-                </div>
-            </div>
-            <div class="header-right">
-                <div id="loading-spinner" class="hidden">
-                    <i class="fas fa-circle-notch fa-spin" style="color:var(--ink2);font-size:15px;"></i>
-                </div>
-                <button onclick="openSettings()" class="icon-btn" aria-label="ตั้งค่า">
-                    <i class="fas fa-cog"></i>
-                </button>
+<!-- Header -->
+<header>
+    <div class="hdr">
+        <div class="logo">
+            <div class="logo-icon"><i class="fas fa-tools"></i></div>
+            <div>
+                <h1>FixIt Classroom</h1>
+                <span id="connection-badge">○ ยังไม่ได้ตั้งค่า</span>
             </div>
         </div>
-    </header>
-
-    <!-- Tabs -->
-    <div class="tabs-wrap">
-        <div class="tabs">
-            <button onclick="switchTab('report')" id="tab-report" class="tab-btn active">
-                <i class="fas fa-plus-circle"></i>แจ้งซ่อม
-            </button>
-            <button onclick="switchTab('status')" id="tab-status" class="tab-btn">
-                <i class="fas fa-list-check"></i>เช็คสถานะ
+        <div class="hdr-r">
+            <div id="loading-spinner" class="hidden">
+                <i class="fas fa-circle-notch fa-spin" style="color:var(--ink2);font-size:15px;"></i>
+            </div>
+            <button onclick="openSettings()" class="icon-btn" aria-label="ตั้งค่า">
+                <i class="fas fa-cog"></i>
             </button>
         </div>
     </div>
+</header>
 
-    <main>
-
-        <!-- ── Report Tab ── -->
-        <section id="section-report" class="fade-up">
-            <p class="eyebrow">Repair Request</p>
-            <h2 class="section-title">แจ้งซ่อม</h2>
-
-            <div class="card">
-                <form id="repairForm" novalidate>
-
-                    <div class="fgroup">
-                        <label class="flabel">อุปกรณ์ที่ชำรุด <span class="req">*</span></label>
-                        <div class="select-wrap">
-                            <select id="equipment" class="fselect">
-                                <option value="">— เลือกอุปกรณ์ —</option>
-                                <option>พัดลม</option>
-                                <option>หน้าต่าง</option>
-                                <option>ประตู</option>
-                                <option>โต๊ะ</option>
-                                <option>เก้าอี้</option>
-                                <option>หลอดไฟ / ไฟฟ้า</option>
-                                <option>เครื่องปรับอากาศ</option>
-                                <option>โปรเจคเตอร์ / ทีวี</option>
-                                <option>อื่นๆ</option>
-                            </select>
-                        </div>
-                        <p id="err-equipment" class="ferr">กรุณาเลือกอุปกรณ์</p>
-                    </div>
-
-                    <div class="fgroup">
-                        <label class="flabel">ห้อง / เลขห้อง <span class="req">*</span></label>
-                        <input type="text" id="room" placeholder="เช่น 402, ห้องสมุด" class="finput">
-                        <p id="err-room" class="ferr">กรุณาระบุห้อง</p>
-                    </div>
-
-                    <div class="fgroup">
-                        <label class="flabel">ชื่อผู้แจ้ง <span class="req">*</span></label>
-                        <input type="text" id="reporter" placeholder="ชื่อ-นามสกุล" class="finput">
-                        <p id="err-reporter" class="ferr">กรุณาระบุชื่อ</p>
-                    </div>
-
-                    <div class="fgroup">
-                        <label class="flabel">รายละเอียด / อาการ</label>
-                        <textarea id="note" rows="3" placeholder="เช่น ใบพัดไม่หมุน, บานพับหลุด..." class="ftextarea"></textarea>
-                    </div>
-
-                    <div class="fgroup">
-                        <label class="flabel">รูปภาพประกอบ</label>
-                        <label for="imageInput" class="upload-label">
-                            <div id="upload-placeholder">
-                                <i class="fas fa-camera upload-icon"></i>
-                                <p class="upload-text">แตะหรือคลิกเพื่อเลือกรูป</p>
-                                <p class="upload-sub">ไฟล์ไม่เกิน 5 MB</p>
-                            </div>
-                            <img id="preview-img" class="hidden" alt="preview"/>
-                            <input id="imageInput" type="file" accept="image/*" capture="environment"
-                                   class="hidden" onchange="previewImage(this)"/>
-                        </label>
-                        <button type="button" id="remove-img-btn" onclick="clearImage()">
-                            <i class="fas fa-times"></i> ลบรูปภาพ
-                        </button>
-                    </div>
-
-                    <button type="submit" id="submit-btn" class="btn-primary">
-                        <i class="fas fa-paper-plane"></i>
-                        <span>ส่งคำแจ้งซ่อม</span>
-                    </button>
-                </form>
-            </div>
-        </section>
-
-        <!-- ── Status Tab ── -->
-        <section id="section-status" class="hidden">
-            <p class="eyebrow">Repair Status</p>
-            <h2 class="section-title">สถานะการซ่อม</h2>
-
-            <div class="search-row">
-                <div class="search-wrap">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchBar" placeholder="ค้นหาห้อง หรืออุปกรณ์..." class="search-input">
-                </div>
-                <button onclick="loadStatus()" id="refresh-btn" class="refresh-btn" aria-label="รีเฟรช">
-                    <i class="fas fa-sync-alt"></i>
-                </button>
-            </div>
-
-            <div class="filter-row">
-                <button data-filter="" onclick="setFilter(this)" class="filter-chip active">ทั้งหมด</button>
-                <button data-filter="รอดำเนินการ" onclick="setFilter(this)" class="filter-chip">รอดำเนินการ</button>
-                <button data-filter="กำลังซ่อม"   onclick="setFilter(this)" class="filter-chip">กำลังซ่อม</button>
-                <button data-filter="ซ่อมเสร็จ"   onclick="setFilter(this)" class="filter-chip">ซ่อมเสร็จ</button>
-            </div>
-
-            <div id="status-list"></div>
-        </section>
-    </main>
-
-    <!-- Toast -->
-    <div id="toast">
-        <i id="toast-icon" class="fas fa-check-circle"></i>
-        <span id="toast-message"></span>
-    </div>
-
-    <!-- Settings Modal -->
-    <div id="settings-modal" class="modal-overlay" onclick="onOverlayClick(event)">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 class="modal-title">ตั้งค่า GitHub</h3>
-                <button onclick="closeSettings()" class="close-btn" aria-label="ปิด">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-
-            <div class="code-block">
-                <p class="code-block-head"><i class="fab fa-github"></i> วิธีสร้าง Personal Access Token</p>
-                <ol>
-                    <li>GitHub → Settings → Developer settings</li>
-                    <li>Personal access tokens → <strong>Fine-grained tokens</strong></li>
-                    <li>Generate new token → เลือก repo <strong>fixit-classroom</strong></li>
-                    <li>Repository permissions:<br>
-                        <span class="green">• Issues: Read and write</span><br>
-                        <span class="green">• Contents: Read and write</span>
-                    </li>
-                    <li>Generate → คัดลอก token มาวาง</li>
-                </ol>
-            </div>
-
-            <div class="repo-pill">
-                <i class="fab fa-github"></i>
-                <span>ดึงข้อมูลจาก <strong>Bobbyboy081/fixit-classroom</strong> — ทุกเครื่องเห็นข้อมูลเดียวกัน</span>
-            </div>
-
-            <div class="mfield">
-                <label>Personal Access Token</label>
-                <div class="token-wrap">
-                    <input type="password" id="cfg-token" placeholder="github_pat_..." class="token-input">
-                    <button type="button" onclick="toggleTokenVisibility()" class="token-eye" aria-label="toggle visibility">
-                        <i id="token-eye" class="fas fa-eye"></i>
-                    </button>
-                </div>
-                <p class="helper">เครื่องที่ไม่มี Token ยังดูประวัติได้ แต่ส่งแจ้งซ่อมไม่ได้</p>
-            </div>
-
-            <div class="modal-actions">
-                <button onclick="setupLabels()" class="btn-outline">
-                    <i class="fas fa-tags"></i> สร้าง Labels
-                </button>
-                <button onclick="saveSettings()" class="btn-dark">
-                    <i class="fas fa-save"></i> บันทึก
-                </button>
-            </div>
-
-            <div class="modal-status">
-                สถานะ: <strong id="current-mode">ไม่มี Token</strong>
-            </div>
-        </div>
-    </div>
-
-    <!-- Lightbox -->
-    <div id="lightbox" onclick="closeLightbox()">
-        <button id="lightbox-close" onclick="closeLightbox(); event.stopPropagation()" aria-label="ปิด">
-            <i class="fas fa-times"></i>
+<!-- Tabs -->
+<div class="tabs-wrap">
+    <div class="tabs">
+        <button onclick="switchTab('report')" id="tab-report" class="tab-btn active">
+            <i class="fas fa-plus-circle"></i>แจ้งซ่อม
         </button>
-        <img id="lightbox-img" src="" alt="repair image" onclick="event.stopPropagation()"/>
+        <button onclick="switchTab('status')" id="tab-status" class="tab-btn">
+            <i class="fas fa-list-check"></i>เช็คสถานะ
+        </button>
     </div>
+</div>
+
+<main>
+
+    <!-- ── Report Tab ── -->
+    <section id="section-report" class="fade-up">
+        <p class="eyebrow">Repair Request</p>
+        <h2 class="sec-title">แจ้งซ่อม</h2>
+
+        <!-- Setup Banner (shown when not configured) -->
+        <div id="setup-banner" class="setup-banner hidden">
+            <div class="sb-icon"><i class="fas fa-plug"></i></div>
+            <h3>ยังไม่ได้เชื่อมต่อ</h3>
+            <p>กรุณาตั้งค่า Apps Script URL<br>เพื่อเริ่มใช้งาน (ทำครั้งเดียว)</p>
+            <button onclick="openSettings()"><i class="fas fa-cog" style="margin-right:6px;"></i>ตั้งค่า</button>
+        </div>
+
+        <div id="report-form-wrap" class="card">
+            <form id="repairForm" novalidate>
+
+                <div class="fg">
+                    <label class="fl">อุปกรณ์ที่ชำรุด <span class="req">*</span></label>
+                    <div class="sw">
+                        <select id="equipment" class="fs">
+                            <option value="">— เลือกอุปกรณ์ —</option>
+                            <option>พัดลม</option>
+                            <option>หน้าต่าง</option>
+                            <option>ประตู</option>
+                            <option>โต๊ะ</option>
+                            <option>เก้าอี้</option>
+                            <option>หลอดไฟ / ไฟฟ้า</option>
+                            <option>เครื่องปรับอากาศ</option>
+                            <option>โปรเจคเตอร์ / ทีวี</option>
+                            <option>อื่นๆ</option>
+                        </select>
+                    </div>
+                    <p id="err-equipment" class="ferr">กรุณาเลือกอุปกรณ์</p>
+                </div>
+
+                <div class="fg">
+                    <label class="fl">ห้อง / เลขห้อง <span class="req">*</span></label>
+                    <input type="text" id="room" placeholder="เช่น 402, ห้องสมุด" class="fi">
+                    <p id="err-room" class="ferr">กรุณาระบุห้อง</p>
+                </div>
+
+                <div class="fg">
+                    <label class="fl">ชื่อผู้แจ้ง <span class="req">*</span></label>
+                    <input type="text" id="reporter" placeholder="ชื่อ-นามสกุล" class="fi">
+                    <p id="err-reporter" class="ferr">กรุณาระบุชื่อ</p>
+                </div>
+
+                <div class="fg">
+                    <label class="fl">รายละเอียด / อาการ</label>
+                    <textarea id="note" rows="3" placeholder="เช่น ใบพัดไม่หมุน, บานพับหลุด..." class="ft"></textarea>
+                </div>
+
+                <div class="fg">
+                    <label class="fl">รูปภาพประกอบ <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink3);">(ต้องตั้งค่า Imgur)</span></label>
+                    <label for="imageInput" class="uplabel">
+                        <div id="upload-placeholder">
+                            <i class="fas fa-camera up-icon"></i>
+                            <p class="up-text">แตะหรือคลิกเพื่อเลือกรูป</p>
+                            <p class="up-sub">ไฟล์ไม่เกิน 5 MB</p>
+                        </div>
+                        <img id="preview-img" class="hidden" alt="preview"/>
+                        <input id="imageInput" type="file" accept="image/*" capture="environment"
+                               class="hidden" onchange="previewImage(this)"/>
+                    </label>
+                    <button type="button" id="remove-img-btn" onclick="clearImage()">
+                        <i class="fas fa-times"></i> ลบรูปภาพ
+                    </button>
+                </div>
+
+                <button type="submit" id="submit-btn" class="btn-primary">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>ส่งคำแจ้งซ่อม</span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ── Status Tab ── -->
+    <section id="section-status" class="hidden">
+        <p class="eyebrow">Repair Status</p>
+        <h2 class="sec-title">สถานะการซ่อม</h2>
+
+        <div class="search-row">
+            <div class="sw2">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchBar" placeholder="ค้นหาห้อง หรืออุปกรณ์..." class="search-inp">
+            </div>
+            <button onclick="loadStatus()" class="refresh-btn" aria-label="รีเฟรช">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+        </div>
+
+        <div class="filter-row">
+            <button data-filter="" onclick="setFilter(this)" class="filter-chip active">ทั้งหมด</button>
+            <button data-filter="รอดำเนินการ" onclick="setFilter(this)" class="filter-chip">รอดำเนินการ</button>
+            <button data-filter="กำลังซ่อม"   onclick="setFilter(this)" class="filter-chip">กำลังซ่อม</button>
+            <button data-filter="ซ่อมเสร็จ"   onclick="setFilter(this)" class="filter-chip">ซ่อมเสร็จ</button>
+        </div>
+
+        <div id="status-list"></div>
+    </section>
+</main>
+
+<!-- Toast -->
+<div id="toast">
+    <i id="toast-icon" class="fas fa-check-circle"></i>
+    <span id="toast-message"></span>
+</div>
+
+<!-- Settings Modal -->
+<div id="settings-modal" class="modal-overlay" onclick="onOverlayClick(event)">
+    <div class="modal">
+        <div class="modal-hdr">
+            <h3 class="modal-title">ตั้งค่าระบบ</h3>
+            <button onclick="closeSettings()" class="close-btn" aria-label="ปิด">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="steps">
+            <p class="steps-head"><i class="fab fa-google"></i> วิธีตั้งค่า (ทำครั้งเดียว)</p>
+            <ol>
+                <li>เปิด <strong>Google Sheets</strong> ใหม่</li>
+                <li>เมนู <strong>Extensions → Apps Script</strong></li>
+                <li>วางโค้ดจากไฟล์ <span class="g">Code.gs</span> ในโปรเจคนี้</li>
+                <li><strong>Deploy → New deployment</strong><br>
+                    <span class="g">Execute as: Me | Access: Anyone</span>
+                </li>
+                <li>คัดลอก <strong>Web app URL</strong> มาวางด้านล่าง</li>
+            </ol>
+        </div>
+
+        <div class="mfield">
+            <label>Apps Script URL <span style="color:#ff3b30;">*</span></label>
+            <input type="url" id="cfg-url" placeholder="https://script.google.com/macros/s/..." class="minput">
+            <p class="helper">ทุกคนใช้ได้โดยไม่ต้องล็อกอิน — URL นี้ไม่เป็นความลับ</p>
+        </div>
+
+        <div class="mfield">
+            <label>Imgur Client ID <span style="color:var(--ink3);font-weight:400;text-transform:none;letter-spacing:0;">(ถ้าต้องการรับรูปภาพ)</span></label>
+            <input type="text" id="cfg-imgur" placeholder="xxxxxxxxxxxxxxx" class="minput">
+            <p class="helper">
+                สมัครฟรีที่ <strong>api.imgur.com</strong> → My Applications → ได้ Client ID<br>
+                ไม่ใช่ Secret — ใส่ในโค้ดได้เลย
+            </p>
+        </div>
+
+        <div class="modal-actions">
+            <button onclick="closeSettings()" class="btn-outline">ยกเลิก</button>
+            <button onclick="saveSettings()" class="btn-dark">
+                <i class="fas fa-save"></i> บันทึก
+            </button>
+        </div>
+
+        <div class="modal-status">
+            สถานะ: <strong id="current-mode">ยังไม่ได้ตั้งค่า</strong>
+        </div>
+    </div>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" onclick="closeLightbox()">
+    <button id="lb-close" onclick="closeLightbox();event.stopPropagation()"><i class="fas fa-times"></i></button>
+    <img id="lightbox-img" src="" alt="repair image" onclick="event.stopPropagation()"/>
+</div>
 
 <script>
 // ── Config ──────────────────────────────────────────────
-const REPO_OWNER = 'Bobbyboy081';
-const REPO_NAME  = 'fixit-classroom';
-const CFG_KEY    = 'fixit_gh_config';
-const GH_API     = 'https://api.github.com';
+const CFG_URL_KEY    = 'fixit_script_url';
+const CFG_IMGUR_KEY  = 'fixit_imgur_id';
 
-function getConfig() { return JSON.parse(localStorage.getItem(CFG_KEY) || '{}'); }
-function saveConfig(cfg) { localStorage.setItem(CFG_KEY, JSON.stringify(cfg)); }
-function hasWriteToken() { return !!(getConfig().token); }
+function getScriptUrl() { return localStorage.getItem(CFG_URL_KEY) || ''; }
+function getImgurId()   { return localStorage.getItem(CFG_IMGUR_KEY) || ''; }
+function isConfigured() { return !!getScriptUrl(); }
 
-// ── GitHub API ───────────────────────────────────────────
-async function ghGet(path) {
-    const res = await fetch(GH_API + path, {
-        headers: { 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' }
-    });
-    if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.message || `HTTP ${res.status}`); }
+// ── API — Google Apps Script ─────────────────────────────
+async function apiGet() {
+    const url = getScriptUrl();
+    if (!url) return [];
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return res.json();
 }
 
-async function ghWrite(method, path, body) {
-    const { token } = getConfig();
-    if (!token) throw new Error('ยังไม่ได้ตั้งค่า Token กรุณากด ⚙️');
-    const res = await fetch(GH_API + path, {
-        method,
-        headers: {
-            'Accept': 'application/vnd.github+json',
-            'X-GitHub-Api-Version': '2022-11-28',
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(body)
-    });
-    if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.message || `HTTP ${res.status}`); }
-    return res.json();
+async function apiPost(data) {
+    const url = getScriptUrl();
+    if (!url) throw new Error('กรุณาตั้งค่า Apps Script URL ในหน้าตั้งค่า ⚙️');
+    // ส่งแบบ text/plain เพื่อหลีกเลี่ยง CORS preflight (Apps Script ไม่รองรับ OPTIONS)
+    const res = await fetch(url, { method: 'POST', body: JSON.stringify(data) });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const result = await res.json();
+    if (result.error) throw new Error(result.error);
+    return result;
 }
 
-async function uploadImage(base64DataUrl, timestamp) {
+// ── Image — Imgur Anonymous Upload ───────────────────────
+async function uploadToImgur(base64DataUrl) {
+    const clientId = getImgurId();
+    if (!clientId) return '';
     const base64 = base64DataUrl.split(',')[1];
-    const path   = `images/Repair_${timestamp}.jpg`;
-    await ghWrite('PUT', `/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
-        message: `repair image ${timestamp}`, content: base64
+    const form = new FormData();
+    form.append('image', base64);
+    const res = await fetch('https://api.imgur.com/3/image', {
+        method: 'POST',
+        headers: { 'Authorization': `Client-ID ${clientId}` },
+        body: form
     });
-    return `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${path}`;
-}
-
-async function createIssue({ equipment, room, reporter, note, imageUrl }) {
-    const lines = [
-        `**อุปกรณ์:** ${equipment}`,
-        `**ห้อง:** ${room}`,
-        `**ผู้แจ้ง:** ${reporter}`,
-        `**อาการ:** ${note || 'ไม่ระบุ'}`
-    ];
-    if (imageUrl) lines.push(`\n![รูปประกอบ](${imageUrl})`);
-    return ghWrite('POST', `/repos/${REPO_OWNER}/${REPO_NAME}/issues`, {
-        title: `[${equipment}] ห้อง ${room}`, body: lines.join('\n'), labels: ['รอดำเนินการ']
-    });
-}
-
-async function fetchIssues() {
-    const issues = await ghGet(`/repos/${REPO_OWNER}/${REPO_NAME}/issues?state=all&per_page=100`);
-    return issues.map(parseIssue);
-}
-
-function parseIssue(issue) {
-    const body  = issue.body || '';
-    const field = (label) => { const m = body.match(new RegExp(`\\*\\*${label}:\\*\\*\\s*(.+)`)); return m ? m[1].trim() : ''; };
-    const imgM  = body.match(/!\[รูปประกอบ\]\((.+?)\)/);
-    let status  = 'รอดำเนินการ';
-    if (issue.state === 'closed') status = 'ซ่อมเสร็จ';
-    else if (issue.labels.some(l => l.name === 'กำลังซ่อม')) status = 'กำลังซ่อม';
-    return {
-        date: issue.created_at, equipment: field('อุปกรณ์'), room: field('ห้อง'),
-        reporter: field('ผู้แจ้ง'), note: field('อาการ'),
-        imageUrl: imgM ? imgM[1] : '', status, url: issue.html_url
-    };
-}
-
-async function setupLabels() {
-    if (!hasWriteToken()) { showToast('กรุณาใส่ Token ก่อน', 'error'); return; }
-    const labels = [
-        { name: 'รอดำเนินการ', color: 'f59e0b' },
-        { name: 'กำลังซ่อม',   color: '3b82f6' },
-        { name: 'ซ่อมเสร็จ',   color: '10b981' }
-    ];
-    showToast('กำลังสร้าง Labels...');
-    const results = await Promise.allSettled(
-        labels.map(l => ghWrite('POST', `/repos/${REPO_OWNER}/${REPO_NAME}/labels`, l))
-    );
-    const ok  = results.filter(r => r.status === 'fulfilled').length;
-    const dup = results.filter(r => r.status === 'rejected').length;
-    showToast(`สร้าง ${ok} labels${dup ? ` (${dup} มีอยู่แล้ว)` : ''}`);
-}
-
-// ── Image ────────────────────────────────────────────────
-let base64Image = '';
-
-function previewImage(input) {
-    if (!input.files || !input.files[0]) return;
-    if (input.files[0].size > 5 * 1024 * 1024) { showToast('รูปใหญ่เกิน 5 MB', 'error'); input.value = ''; return; }
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-        base64Image = ev.target.result;
-        const img = document.getElementById('preview-img');
-        img.src = base64Image;
-        img.classList.remove('hidden');
-        document.getElementById('upload-placeholder').classList.add('hidden');
-        document.getElementById('remove-img-btn').style.display = 'block';
-    };
-    reader.readAsDataURL(input.files[0]);
-}
-
-function clearImage() {
-    base64Image = '';
-    document.getElementById('imageInput').value = '';
-    const img = document.getElementById('preview-img');
-    img.src = ''; img.classList.add('hidden');
-    document.getElementById('upload-placeholder').classList.remove('hidden');
-    document.getElementById('remove-img-btn').style.display = 'none';
+    const data = await res.json();
+    if (!data.success) throw new Error('อัพโหลดรูปไม่สำเร็จ');
+    return data.data.link;
 }
 
 // ── Form Submit ──────────────────────────────────────────
+let base64Image = '';
+
 document.getElementById('repairForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (!isConfigured()) { showToast('กรุณาตั้งค่า Apps Script URL ก่อน', 'error'); openSettings(); return; }
+
     const equipment = document.getElementById('equipment').value.trim();
     const room      = document.getElementById('room').value.trim();
     const reporter  = document.getElementById('reporter').value.trim();
@@ -724,8 +591,15 @@ document.getElementById('repairForm').addEventListener('submit', async (e) => {
     setLoading(true);
     try {
         let imageUrl = '';
-        if (base64Image) { showToast('กำลังอัพโหลดรูปภาพ...'); imageUrl = await uploadImage(base64Image, Date.now()); }
-        await createIssue({ equipment, room, reporter, note, imageUrl });
+        if (base64Image) {
+            if (getImgurId()) {
+                showToast('กำลังอัพโหลดรูปภาพ...');
+                imageUrl = await uploadToImgur(base64Image);
+            } else {
+                showToast('ไม่มี Imgur ID — บันทึกโดยไม่มีรูป');
+            }
+        }
+        await apiPost({ equipment, room, reporter, note, imageUrl });
         showToast('ส่งคำแจ้งซ่อมเรียบร้อย!');
         resetForm();
         await delay(300);
@@ -742,13 +616,35 @@ function resetForm() {
     ['equipment', 'room', 'reporter'].forEach(id => document.getElementById('err-' + id).classList.remove('show'));
 }
 
+// ── Image Preview ────────────────────────────────────────
+function previewImage(input) {
+    if (!input.files || !input.files[0]) return;
+    if (input.files[0].size > 5 * 1024 * 1024) { showToast('รูปใหญ่เกิน 5 MB', 'error'); input.value = ''; return; }
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+        base64Image = ev.target.result;
+        const img = document.getElementById('preview-img');
+        img.src = base64Image; img.classList.remove('hidden');
+        document.getElementById('upload-placeholder').classList.add('hidden');
+        document.getElementById('remove-img-btn').style.display = 'block';
+    };
+    reader.readAsDataURL(input.files[0]);
+}
+function clearImage() {
+    base64Image = '';
+    document.getElementById('imageInput').value = '';
+    const img = document.getElementById('preview-img');
+    img.src = ''; img.classList.add('hidden');
+    document.getElementById('upload-placeholder').classList.remove('hidden');
+    document.getElementById('remove-img-btn').style.display = 'none';
+}
+
 // ── Status List ──────────────────────────────────────────
-let cachedData   = [];
-let activeFilter = '';
+let cachedData = [], activeFilter = '';
 
 async function loadStatus() {
     showListLoading();
-    try { cachedData = await fetchIssues(); }
+    try { cachedData = await apiGet(); }
     catch (err) { showToast('โหลดไม่สำเร็จ: ' + err.message, 'error'); cachedData = []; }
     renderList();
 }
@@ -765,6 +661,10 @@ function renderList() {
         return mf && ms;
     });
     listEl.innerHTML = '';
+    if (!isConfigured()) {
+        listEl.innerHTML = '<div class="empty-state"><i class="fas fa-plug"></i><p>ยังไม่ได้ตั้งค่าระบบ</p></div>';
+        return;
+    }
     if (filtered.length === 0) {
         listEl.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>ไม่พบรายการ</p></div>';
         return;
@@ -774,12 +674,11 @@ function renderList() {
 
 function createCard(item, idx) {
     const card = document.createElement('div');
-    card.className = 'repair-card fade-up';
+    card.className = 'rc fade-up';
     card.style.animationDelay = Math.min(idx * 40, 280) + 'ms';
 
-    const badgeClass = { 'รอดำเนินการ': 'badge-pending', 'กำลังซ่อม': 'badge-progress', 'ซ่อมเสร็จ': 'badge-done' }[item.status] || 'badge-pending';
+    const bcls = { 'รอดำเนินการ': 'b-wait', 'กำลังซ่อม': 'b-work', 'ซ่อมเสร็จ': 'b-done' }[item.status] || 'b-wait';
 
-    // Top row
     const top = document.createElement('div');
     top.className = 'rc-top';
 
@@ -790,30 +689,29 @@ function createCard(item, idx) {
     const info = document.createElement('div');
     info.className = 'rc-info';
 
-    const titleRow = document.createElement('div');
-    titleRow.className = 'rc-title-row';
+    const tr = document.createElement('div');
+    tr.className = 'rc-tr';
 
     const title = document.createElement('h3');
     title.className = 'rc-title';
     title.textContent = `${item.equipment} — ${item.room}`;
 
     const badge = document.createElement('span');
-    badge.className = `status-badge ${badgeClass}`;
+    badge.className = `sbadge ${bcls}`;
     badge.textContent = item.status || 'รอดำเนินการ';
 
-    titleRow.append(title, badge);
+    tr.append(title, badge);
 
     const noteEl = document.createElement('p');
     noteEl.className = 'rc-note';
     noteEl.textContent = item.note || 'ไม่มีรายละเอียดเพิ่มเติม';
 
-    info.append(titleRow, noteEl);
+    info.append(tr, noteEl);
     top.append(iconBox, info);
     card.appendChild(top);
 
-    // Image
     const imageUrl = (item.imageUrl || '').trim();
-    if (imageUrl && imageUrl !== 'ไม่มีรูป') {
+    if (imageUrl) {
         const imgWrap = document.createElement('div');
         imgWrap.className = 'rc-img';
         const img = document.createElement('img');
@@ -825,20 +723,16 @@ function createCard(item, idx) {
         card.appendChild(imgWrap);
     }
 
-    // Footer
-    const footer = document.createElement('div');
-    footer.className = 'rc-footer';
-
+    const foot = document.createElement('div');
+    foot.className = 'rc-foot';
     const userEl = document.createElement('span');
     userEl.className = 'rc-meta';
     userEl.innerHTML = `<i class="fas fa-user"></i>${item.reporter || 'ไม่ระบุ'}`;
-
     const dateEl = document.createElement('span');
     dateEl.className = 'rc-meta';
     dateEl.innerHTML = `<i class="fas fa-calendar-alt"></i>${formatDate(item.date)}`;
-
-    footer.append(userEl, dateEl);
-    card.appendChild(footer);
+    foot.append(userEl, dateEl);
+    card.appendChild(foot);
     return card;
 }
 
@@ -855,46 +749,43 @@ function setFilter(btn) {
 }
 
 // ── Lightbox ─────────────────────────────────────────────
-function openLightbox(url) {
-    document.getElementById('lightbox-img').src = url;
-    document.getElementById('lightbox').classList.add('open');
-}
-function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('open');
-    document.getElementById('lightbox-img').src = '';
-}
+function openLightbox(url) { document.getElementById('lightbox-img').src = url; document.getElementById('lightbox').classList.add('open'); }
+function closeLightbox()   { document.getElementById('lightbox').classList.remove('open'); document.getElementById('lightbox-img').src = ''; }
 
 // ── Settings ─────────────────────────────────────────────
 function openSettings() {
-    const { token = '' } = getConfig();
-    document.getElementById('cfg-token').value = token;
-    document.getElementById('current-mode').textContent = hasWriteToken() ? 'มี Token (ส่งแจ้งซ่อมได้)' : 'ไม่มี Token (ดูอย่างเดียว)';
+    document.getElementById('cfg-url').value   = getScriptUrl();
+    document.getElementById('cfg-imgur').value = getImgurId();
+    updateModeLabel();
     document.getElementById('settings-modal').classList.add('open');
 }
 function closeSettings() { document.getElementById('settings-modal').classList.remove('open'); }
 function onOverlayClick(e) { if (e.target === e.currentTarget) closeSettings(); }
-
 function saveSettings() {
-    const token = document.getElementById('cfg-token').value.trim();
-    saveConfig({ token });
+    const url    = document.getElementById('cfg-url').value.trim();
+    const imgur  = document.getElementById('cfg-imgur').value.trim();
+    localStorage.setItem(CFG_URL_KEY, url);
+    localStorage.setItem(CFG_IMGUR_KEY, imgur);
     updateConnectionBadge();
     closeSettings();
-    showToast(token ? 'บันทึก Token เรียบร้อย' : 'ลบ Token แล้ว (ดูอย่างเดียว)');
+    showToast(url ? 'บันทึกเรียบร้อย' : 'ล้างค่าแล้ว');
+    initUI();
 }
-function toggleTokenVisibility() {
-    const input = document.getElementById('cfg-token');
-    const icon  = document.getElementById('token-eye');
-    const show  = input.type === 'password';
-    input.type  = show ? 'text' : 'password';
-    icon.className = `fas fa-eye${show ? '-slash' : ''} `;
+function updateModeLabel() {
+    const url   = getScriptUrl();
+    const imgur = getImgurId();
+    let   label = 'ยังไม่ได้ตั้งค่า';
+    if (url && imgur) label = 'พร้อมใช้งานเต็มรูปแบบ (มีรูปภาพ)';
+    else if (url)    label = 'พร้อมใช้งาน (ไม่มีรูปภาพ)';
+    document.getElementById('current-mode').textContent = label;
 }
 function updateConnectionBadge() {
     const badge = document.getElementById('connection-badge');
-    if (hasWriteToken()) {
-        badge.textContent = '● ส่งแจ้งซ่อมได้';
+    if (isConfigured()) {
+        badge.textContent = '● พร้อมใช้งาน';
         badge.style.color = '#30d158';
     } else {
-        badge.textContent = '● ยังไม่มี Token';
+        badge.textContent = '○ ยังไม่ได้ตั้งค่า';
         badge.style.color = 'var(--ink3)';
     }
 }
@@ -909,7 +800,7 @@ function switchTab(tab) {
     if (!isReport) loadStatus();
 }
 
-// ── Helpers ───────────────────────────────────────────────
+// ── Helpers ──────────────────────────────────────────────
 function setLoading(on) {
     document.getElementById('loading-spinner').classList.toggle('hidden', !on);
     const btn = document.getElementById('submit-btn');
@@ -918,19 +809,16 @@ function setLoading(on) {
         ? '<i class="fas fa-circle-notch fa-spin"></i><span>กำลังส่ง...</span>'
         : '<i class="fas fa-paper-plane"></i><span>ส่งคำแจ้งซ่อม</span>';
 }
-
 function getIcon(eq) {
-    return { 'พัดลม': 'fa-fan', 'หน้าต่าง': 'fa-window-maximize', 'ประตู': 'fa-door-open',
-             'โต๊ะ': 'fa-border-all', 'เก้าอี้': 'fa-chair', 'หลอดไฟ / ไฟฟ้า': 'fa-lightbulb',
-             'เครื่องปรับอากาศ': 'fa-snowflake', 'โปรเจคเตอร์ / ทีวี': 'fa-video' }[eq] || 'fa-tools';
+    return { 'พัดลม':'fa-fan','หน้าต่าง':'fa-window-maximize','ประตู':'fa-door-open',
+             'โต๊ะ':'fa-border-all','เก้าอี้':'fa-chair','หลอดไฟ / ไฟฟ้า':'fa-lightbulb',
+             'เครื่องปรับอากาศ':'fa-snowflake','โปรเจคเตอร์ / ทีวี':'fa-video' }[eq] || 'fa-tools';
 }
-
 function formatDate(date) {
     if (!date) return '—';
-    try { return new Intl.DateTimeFormat('th-TH', { day: 'numeric', month: 'short', year: '2-digit' }).format(new Date(date)); }
+    try { return new Intl.DateTimeFormat('th-TH', { day:'numeric', month:'short', year:'2-digit' }).format(new Date(date)); }
     catch { return '—'; }
 }
-
 let toastTimer;
 function showToast(message, type = 'success') {
     clearTimeout(toastTimer);
@@ -941,12 +829,18 @@ function showToast(message, type = 'success') {
     toast.classList.add('show');
     toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
 }
-
 function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 // ── Init ─────────────────────────────────────────────────
+function initUI() {
+    const configured = isConfigured();
+    document.getElementById('setup-banner').classList.toggle('hidden', configured);
+    document.getElementById('report-form-wrap').classList.toggle('hidden', !configured);
+    updateConnectionBadge();
+}
+
 document.getElementById('searchBar').addEventListener('input', renderList);
-updateConnectionBadge();
+initUI();
 loadStatus();
 </script>
 </body>

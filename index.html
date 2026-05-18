@@ -4,122 +4,484 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FixIt Classroom</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Kanit', sans-serif; background-color: #f8fafc; }
-        .tab-active { border-bottom: 3px solid #3b82f6; color: #3b82f6; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
-        #toast { transition: opacity 0.3s, transform 0.3s; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --ink:        #1d1d1f;
+            --ink2:       #6e6e73;
+            --ink3:       #86868b;
+            --sep:        #d2d2d7;
+            --fill:       #f5f5f7;
+            --fill2:      #e8e8ed;
+            --white:      #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--fill);
+            color: var(--ink);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .hidden { display: none !important; }
+
+        /* ─── Header ─── */
+        header {
+            background: rgba(255,255,255,0.82);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 0.5px solid var(--sep);
+            position: sticky; top: 0; z-index: 50;
+        }
+        .header-inner {
+            max-width: 560px; margin: 0 auto;
+            padding: 0 24px; height: 56px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo { display: flex; align-items: center; gap: 10px; }
+        .logo-icon {
+            width: 32px; height: 32px; background: var(--ink);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 13px; flex-shrink: 0;
+        }
+        .logo h1 {
+            font-size: 15px; font-weight: 600; letter-spacing: -0.3px;
+            color: var(--ink); line-height: 1.2;
+        }
+        #connection-badge { font-size: 10px; color: var(--ink3); font-weight: 400; }
+        .header-right { display: flex; align-items: center; gap: 8px; }
+        .icon-btn {
+            background: none; border: none; cursor: pointer;
+            color: var(--ink2); width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 17px; transition: background 0.15s;
+        }
+        .icon-btn:hover { background: rgba(0,0,0,0.07); }
+
+        /* ─── Tabs ─── */
+        .tabs-wrap {
+            max-width: 560px; margin: 0 auto; padding: 0 24px;
+            position: sticky; top: 56px; z-index: 40; background: var(--fill);
+        }
+        .tabs { display: flex; border-bottom: 0.5px solid var(--sep); }
+        .tab-btn {
+            flex: 1; padding: 13px 0; font-size: 14px; font-weight: 500;
+            text-align: center; background: none; border: none; cursor: pointer;
+            color: var(--ink2); border-bottom: 2px solid transparent;
+            margin-bottom: -0.5px; transition: all 0.2s; font-family: inherit;
+            letter-spacing: -0.1px;
+        }
+        .tab-btn i { margin-right: 6px; font-size: 12px; }
+        .tab-btn.active { color: var(--ink); border-bottom-color: var(--ink); }
+
+        /* ─── Main ─── */
+        main { max-width: 560px; margin: 0 auto; padding: 36px 24px 96px; }
+
+        .eyebrow {
+            font-size: 11px; font-weight: 600; letter-spacing: 0.07em;
+            color: var(--ink3); text-transform: uppercase; margin-bottom: 6px;
+        }
+        .section-title {
+            font-size: 30px; font-weight: 700; letter-spacing: -0.6px;
+            color: var(--ink); line-height: 1.1; margin-bottom: 28px;
+        }
+
+        /* ─── Card ─── */
+        .card {
+            background: var(--white); border-radius: 20px; padding: 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 0 0 0.5px rgba(0,0,0,0.08);
+        }
+
+        /* ─── Form ─── */
+        .fgroup { margin-bottom: 20px; }
+        .flabel {
+            display: block; font-size: 12px; font-weight: 600;
+            color: var(--ink2); margin-bottom: 8px; letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+        .flabel .req { color: #ff3b30; margin-left: 2px; }
+
+        .finput, .fselect, .ftextarea {
+            width: 100%; padding: 13px 16px;
+            border: 1px solid var(--sep); border-radius: 12px;
+            font-size: 15px; font-family: inherit; color: var(--ink);
+            background: var(--fill); outline: none; transition: all 0.2s;
+            appearance: none; -webkit-appearance: none;
+        }
+        .finput:focus, .fselect:focus, .ftextarea:focus {
+            border-color: var(--ink); background: var(--white);
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.07);
+        }
+        .ftextarea { resize: none; line-height: 1.55; }
+
+        .select-wrap { position: relative; }
+        .select-wrap::after {
+            content: '';
+            position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+            border-left: 4.5px solid transparent; border-right: 4.5px solid transparent;
+            border-top: 5px solid var(--ink2); pointer-events: none;
+        }
+
+        .ferr { font-size: 12px; color: #ff3b30; margin-top: 6px; display: none; }
+        .ferr.show { display: block; }
+
+        /* ─── Upload ─── */
+        .upload-label {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; width: 100%; height: 136px;
+            border: 1.5px dashed var(--sep); border-radius: 14px;
+            background: var(--fill); cursor: pointer;
+            transition: all 0.2s; position: relative; overflow: hidden;
+        }
+        .upload-label:hover { border-color: var(--ink); background: rgba(0,0,0,0.03); }
+        .upload-icon { font-size: 22px; color: var(--ink3); margin-bottom: 8px; }
+        .upload-text { font-size: 13px; font-weight: 500; color: var(--ink2); }
+        .upload-sub { font-size: 11px; color: var(--ink3); margin-top: 3px; }
+        #preview-img {
+            position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+        }
+        #remove-img-btn {
+            background: none; border: none; cursor: pointer; font-size: 12px;
+            color: #ff3b30; margin-top: 8px; font-family: inherit;
+            font-weight: 500; display: none;
+        }
+
+        /* ─── Primary Button ─── */
+        .btn-primary {
+            width: 100%; background: var(--ink); color: var(--white);
+            border: none; border-radius: 980px; padding: 16px 24px;
+            font-size: 15px; font-weight: 600; font-family: inherit; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: all 0.2s; letter-spacing: -0.1px; margin-top: 8px;
+        }
+        .btn-primary:hover { background: #333; transform: scale(1.005); }
+        .btn-primary:active { transform: scale(0.995); }
+        .btn-primary:disabled {
+            background: var(--fill2); color: var(--ink3);
+            cursor: not-allowed; transform: none;
+        }
+
+        /* ─── Status ─── */
+        .search-row { display: flex; gap: 10px; margin-bottom: 16px; }
+        .search-wrap { flex: 1; position: relative; }
+        .search-wrap i {
+            position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+            color: var(--ink3); font-size: 13px; pointer-events: none;
+        }
+        .search-input {
+            width: 100%; padding: 12px 16px 12px 38px;
+            border: 1px solid var(--sep); border-radius: 12px;
+            background: var(--white); font-size: 14px; font-family: inherit;
+            color: var(--ink); outline: none; transition: all 0.2s;
+        }
+        .search-input:focus {
+            border-color: var(--ink); box-shadow: 0 0 0 3px rgba(0,0,0,0.07);
+        }
+        .refresh-btn {
+            background: var(--white); border: 1px solid var(--sep);
+            border-radius: 12px; width: 44px; height: 44px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; color: var(--ink2); transition: all 0.2s; flex-shrink: 0;
+        }
+        .refresh-btn:hover { border-color: var(--ink); color: var(--ink); }
+
+        .filter-row {
+            display: flex; gap: 8px; margin-bottom: 22px;
+            overflow-x: auto; padding-bottom: 2px;
+        }
+        .filter-row::-webkit-scrollbar { display: none; }
+        .filter-chip {
+            white-space: nowrap; font-size: 12px; font-weight: 500;
+            padding: 6px 15px; border-radius: 980px;
+            border: 1px solid var(--sep); background: var(--white);
+            color: var(--ink2); cursor: pointer; font-family: inherit; transition: all 0.18s;
+        }
+        .filter-chip.active { background: var(--ink); color: var(--white); border-color: var(--ink); }
+
+        /* ─── Repair Card ─── */
+        .repair-card {
+            background: var(--white); border-radius: 16px; padding: 20px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05), 0 0 0 0.5px rgba(0,0,0,0.07);
+            margin-bottom: 12px;
+        }
+        .rc-top { display: flex; align-items: flex-start; gap: 14px; }
+        .rc-icon {
+            background: var(--fill); border-radius: 12px;
+            width: 44px; height: 44px; display: flex;
+            align-items: center; justify-content: center;
+            flex-shrink: 0; color: var(--ink2); font-size: 16px;
+        }
+        .rc-info { flex: 1; min-width: 0; }
+        .rc-title-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+        .rc-title { font-size: 15px; font-weight: 600; color: var(--ink); letter-spacing: -0.2px; line-height: 1.3; }
+        .status-badge {
+            flex-shrink: 0; font-size: 11px; font-weight: 600;
+            padding: 3px 10px; border-radius: 980px; letter-spacing: 0.01em;
+        }
+        .badge-pending  { background: #fff3cd; color: #7d5a00; }
+        .badge-progress { background: #e3eeff; color: #0040a0; }
+        .badge-done     { background: #d4f1e3; color: #0a5c36; }
+
+        .rc-note { font-size: 13px; color: var(--ink2); margin-top: 5px; line-height: 1.55; }
+        .rc-img {
+            width: 100%; height: 156px; border-radius: 12px;
+            overflow: hidden; margin-top: 14px; background: var(--fill); cursor: pointer;
+        }
+        .rc-img img {
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s;
+            display: block;
+        }
+        .rc-img img:hover { transform: scale(1.04); }
+        .rc-footer {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--fill);
+        }
+        .rc-meta { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--ink3); }
+
+        /* ─── Empty / Loading ─── */
+        .empty-state, .loading-state {
+            text-align: center; padding: 64px 0; color: var(--ink3);
+        }
+        .empty-state i, .loading-state i {
+            font-size: 36px; display: block; margin-bottom: 12px;
+        }
+        .empty-state p, .loading-state p { font-size: 15px; font-weight: 500; }
+
+        /* ─── Toast ─── */
+        #toast {
+            position: fixed; bottom: 32px; left: 50%;
+            transform: translateX(-50%) translateY(16px);
+            padding: 11px 20px; border-radius: 980px;
+            color: white; font-size: 14px; font-weight: 500; z-index: 100;
+            display: flex; align-items: center; gap: 8px;
+            opacity: 0; pointer-events: none; white-space: nowrap;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+            transition: all 0.3s cubic-bezier(0.34, 1.42, 0.64, 1);
+        }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ─── Modal ─── */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+            z-index: 200; display: none;
+            align-items: flex-end; justify-content: center;
+            padding: 0;
+        }
+        @media (min-width: 560px) {
+            .modal-overlay { align-items: center; padding: 24px; }
+            .modal { border-radius: 20px !important; }
+        }
+        .modal-overlay.open { display: flex; }
+        .modal {
+            background: var(--white); width: 100%; max-width: 480px; max-height: 90vh;
+            overflow-y: auto; padding: 28px 24px 40px;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.22);
+            animation: slideUp 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+        }
+        @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .modal-title { font-size: 20px; font-weight: 700; letter-spacing: -0.4px; }
+        .close-btn {
+            background: var(--fill); border: none; width: 28px; height: 28px;
+            border-radius: 50%; cursor: pointer; color: var(--ink2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; transition: all 0.15s;
+        }
+        .close-btn:hover { background: var(--fill2); color: var(--ink); }
+
+        .code-block {
+            background: #1d1d1f; border-radius: 14px; padding: 18px; margin-bottom: 18px;
+        }
+        .code-block-head {
+            font-size: 11px; font-weight: 600; color: #86868b;
+            margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
+            letter-spacing: 0.04em; text-transform: uppercase;
+        }
+        .code-block ol {
+            list-style: decimal; padding-left: 18px;
+            color: #a1a1a6; font-size: 12px; line-height: 1.9;
+        }
+        .code-block ol li strong { color: #e8e8ed; }
+        .code-block ol li .green { color: #32d74b; }
+
+        .repo-pill {
+            background: var(--fill); border-radius: 12px; padding: 12px 16px;
+            display: flex; align-items: center; gap: 10px;
+            font-size: 13px; color: var(--ink2); margin-bottom: 20px;
+        }
+        .repo-pill strong { color: var(--ink); }
+
+        .mfield { margin-bottom: 16px; }
+        .mfield label {
+            display: block; font-size: 12px; font-weight: 600;
+            color: var(--ink2); margin-bottom: 7px;
+            letter-spacing: 0.03em; text-transform: uppercase;
+        }
+        .token-wrap { position: relative; }
+        .token-input {
+            width: 100%; padding: 12px 44px 12px 16px;
+            border: 1px solid var(--sep); border-radius: 12px;
+            font-size: 13px; font-family: 'SF Mono', 'Fira Code', monospace;
+            background: var(--fill); color: var(--ink); outline: none; transition: all 0.2s;
+        }
+        .token-input:focus {
+            border-color: var(--ink); background: var(--white);
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.07);
+        }
+        .token-eye {
+            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; cursor: pointer; color: var(--ink3); font-size: 14px;
+        }
+        .helper { font-size: 11px; color: var(--ink3); margin-top: 6px; }
+
+        .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-outline {
+            flex: 1; padding: 13px; border: 1px solid var(--sep);
+            border-radius: 980px; background: var(--white);
+            color: var(--ink); font-size: 14px; font-weight: 500;
+            font-family: inherit; cursor: pointer; transition: all 0.18s;
+        }
+        .btn-outline:hover { background: var(--fill); }
+        .btn-dark {
+            flex: 1; padding: 13px; border: none;
+            border-radius: 980px; background: var(--ink);
+            color: var(--white); font-size: 14px; font-weight: 600;
+            font-family: inherit; cursor: pointer; transition: all 0.18s;
+        }
+        .btn-dark:hover { background: #333; }
+        .modal-status {
+            border-top: 0.5px solid var(--sep); padding-top: 16px; margin-top: 16px;
+            font-size: 12px; color: var(--ink3);
+        }
+        .modal-status strong { color: var(--ink); }
+
+        /* ─── Lightbox ─── */
+        #lightbox {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.92);
+            z-index: 400; display: none;
+            align-items: center; justify-content: center; padding: 24px;
+        }
+        #lightbox.open { display: flex; }
+        #lightbox-close {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(255,255,255,0.14); border: none; color: #fff;
+            width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
+            font-size: 13px; display: flex; align-items: center; justify-content: center;
+            transition: background 0.18s;
+        }
+        #lightbox-close:hover { background: rgba(255,255,255,0.25); }
+        #lightbox-img { max-width: 100%; max-height: 100%; border-radius: 12px; object-fit: contain; }
+
+        /* ─── Fade animation ─── */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+        .fade-up { animation: fadeUp 0.28s ease-out forwards; }
     </style>
 </head>
-<body class="min-h-screen text-slate-800">
+<body>
 
     <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-                <div class="bg-blue-600 p-2 rounded-lg">
-                    <i class="fas fa-tools text-white text-xl"></i>
-                </div>
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-icon"><i class="fas fa-tools"></i></div>
                 <div>
-                    <h1 class="text-lg font-bold text-slate-900 leading-tight">FixIt <span class="text-blue-600">Classroom</span></h1>
-                    <span id="connection-badge" class="text-[10px] text-slate-400">○ โหมด Demo</span>
+                    <h1>FixIt Classroom</h1>
+                    <span id="connection-badge">○ โหมด Demo</span>
                 </div>
             </div>
-            <div class="flex items-center space-x-3">
+            <div class="header-right">
                 <div id="loading-spinner" class="hidden">
-                    <i class="fas fa-circle-notch fa-spin text-blue-500"></i>
+                    <i class="fas fa-circle-notch fa-spin" style="color:var(--ink2);font-size:15px;"></i>
                 </div>
-                <button onclick="openSettings()" class="text-slate-400 hover:text-slate-700 transition-colors p-2 rounded-lg hover:bg-slate-100">
-                    <i class="fas fa-cog text-xl"></i>
+                <button onclick="openSettings()" class="icon-btn" aria-label="ตั้งค่า">
+                    <i class="fas fa-cog"></i>
                 </button>
             </div>
         </div>
     </header>
 
     <!-- Tabs -->
-    <div class="max-w-md mx-auto px-4 sticky top-16 z-40 bg-[#f8fafc]">
-        <div class="flex border-b border-slate-200">
-            <button onclick="switchTab('report')" id="tab-report" class="flex-1 py-3 font-medium text-center transition-all tab-active">
-                <i class="fas fa-plus-circle mr-2"></i>แจ้งซ่อม
+    <div class="tabs-wrap">
+        <div class="tabs">
+            <button onclick="switchTab('report')" id="tab-report" class="tab-btn active">
+                <i class="fas fa-plus-circle"></i>แจ้งซ่อม
             </button>
-            <button onclick="switchTab('status')" id="tab-status" class="flex-1 py-3 font-medium text-center text-slate-500 transition-all">
-                <i class="fas fa-list-check mr-2"></i>เช็คสถานะ
+            <button onclick="switchTab('status')" id="tab-status" class="tab-btn">
+                <i class="fas fa-list-check"></i>เช็คสถานะ
             </button>
         </div>
     </div>
 
-    <main class="max-w-md mx-auto px-4 py-6 pb-24">
+    <main>
 
-        <!-- ============ Report Tab ============ -->
-        <section id="section-report" class="animate-fade-in">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                <h2 class="text-lg font-semibold mb-5 flex items-center">
-                    <span class="w-1.5 h-6 bg-blue-600 rounded-full mr-2 flex-shrink-0"></span>
-                    รายละเอียดการแจ้งซ่อม
-                </h2>
+        <!-- ── Report Tab ── -->
+        <section id="section-report" class="fade-up">
+            <p class="eyebrow">Repair Request</p>
+            <h2 class="section-title">แจ้งซ่อม</h2>
 
-                <form id="repairForm" class="space-y-4" novalidate>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-600 mb-1">อุปกรณ์ที่ชำรุด <span class="text-red-500">*</span></label>
-                        <select id="equipment" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
-                            <option value="">-- เลือกอุปกรณ์ --</option>
-                            <option>พัดลม</option>
-                            <option>หน้าต่าง</option>
-                            <option>ประตู</option>
-                            <option>โต๊ะ</option>
-                            <option>เก้าอี้</option>
-                            <option>หลอดไฟ / ไฟฟ้า</option>
-                            <option>เครื่องปรับอากาศ</option>
-                            <option>โปรเจคเตอร์ / ทีวี</option>
-                            <option>อื่นๆ</option>
-                        </select>
-                        <p id="err-equipment" class="text-red-500 text-xs mt-1 hidden">กรุณาเลือกอุปกรณ์</p>
+            <div class="card">
+                <form id="repairForm" novalidate>
+
+                    <div class="fgroup">
+                        <label class="flabel">อุปกรณ์ที่ชำรุด <span class="req">*</span></label>
+                        <div class="select-wrap">
+                            <select id="equipment" class="fselect">
+                                <option value="">— เลือกอุปกรณ์ —</option>
+                                <option>พัดลม</option>
+                                <option>หน้าต่าง</option>
+                                <option>ประตู</option>
+                                <option>โต๊ะ</option>
+                                <option>เก้าอี้</option>
+                                <option>หลอดไฟ / ไฟฟ้า</option>
+                                <option>เครื่องปรับอากาศ</option>
+                                <option>โปรเจคเตอร์ / ทีวี</option>
+                                <option>อื่นๆ</option>
+                            </select>
+                        </div>
+                        <p id="err-equipment" class="ferr">กรุณาเลือกอุปกรณ์</p>
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-slate-600 mb-1">ห้อง / เลขห้อง <span class="text-red-500">*</span></label>
-                        <input type="text" id="room" placeholder="เช่น 402, ห้องสมุด"
-                               class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all">
-                        <p id="err-room" class="text-red-500 text-xs mt-1 hidden">กรุณาระบุห้อง</p>
+                    <div class="fgroup">
+                        <label class="flabel">ห้อง / เลขห้อง <span class="req">*</span></label>
+                        <input type="text" id="room" placeholder="เช่น 402, ห้องสมุด" class="finput">
+                        <p id="err-room" class="ferr">กรุณาระบุห้อง</p>
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-slate-600 mb-1">ชื่อผู้แจ้ง <span class="text-red-500">*</span></label>
-                        <input type="text" id="reporter" placeholder="ชื่อ-นามสกุล"
-                               class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all">
-                        <p id="err-reporter" class="text-red-500 text-xs mt-1 hidden">กรุณาระบุชื่อ</p>
+                    <div class="fgroup">
+                        <label class="flabel">ชื่อผู้แจ้ง <span class="req">*</span></label>
+                        <input type="text" id="reporter" placeholder="ชื่อ-นามสกุล" class="finput">
+                        <p id="err-reporter" class="ferr">กรุณาระบุชื่อ</p>
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-slate-600 mb-1">รายละเอียด / อาการ</label>
-                        <textarea id="note" rows="3" placeholder="เช่น ใบพัดไม่หมุน, บานพับหลุด..."
-                                  class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none"></textarea>
+                    <div class="fgroup">
+                        <label class="flabel">รายละเอียด / อาการ</label>
+                        <textarea id="note" rows="3" placeholder="เช่น ใบพัดไม่หมุน, บานพับหลุด..." class="ftextarea"></textarea>
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-slate-600 mb-1">รูปภาพประกอบ</label>
-                        <label for="imageInput" class="relative flex flex-col items-center justify-center w-full h-36 border-2 border-slate-200 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-all overflow-hidden">
-                            <div id="upload-placeholder" class="flex flex-col items-center">
-                                <i class="fas fa-camera text-slate-400 text-2xl mb-2"></i>
-                                <p class="text-xs text-slate-500">แตะหรือคลิกเพื่อเลือกรูป</p>
-                                <p class="text-[10px] text-slate-400 mt-0.5">ไฟล์ไม่เกิน 5 MB</p>
+                    <div class="fgroup">
+                        <label class="flabel">รูปภาพประกอบ</label>
+                        <label for="imageInput" class="upload-label">
+                            <div id="upload-placeholder">
+                                <i class="fas fa-camera upload-icon"></i>
+                                <p class="upload-text">แตะหรือคลิกเพื่อเลือกรูป</p>
+                                <p class="upload-sub">ไฟล์ไม่เกิน 5 MB</p>
                             </div>
-                            <img id="preview-img" class="absolute inset-0 w-full h-full object-cover hidden" alt="preview"/>
+                            <img id="preview-img" class="hidden" alt="preview"/>
                             <input id="imageInput" type="file" accept="image/*" capture="environment"
                                    class="hidden" onchange="previewImage(this)"/>
                         </label>
-                        <button type="button" id="remove-img-btn" onclick="clearImage()"
-                                class="hidden mt-2 text-xs text-rose-500 hover:text-rose-700 transition-colors">
-                            <i class="fas fa-times mr-1"></i>ลบรูปภาพ
+                        <button type="button" id="remove-img-btn" onclick="clearImage()">
+                            <i class="fas fa-times"></i> ลบรูปภาพ
                         </button>
                     </div>
 
-                    <button type="submit" id="submit-btn"
-                            class="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold py-4 rounded-xl shadow-md shadow-blue-200 transition-all flex items-center justify-center space-x-2">
+                    <button type="submit" id="submit-btn" class="btn-primary">
                         <i class="fas fa-paper-plane"></i>
                         <span>ส่งคำแจ้งซ่อม</span>
                     </button>
@@ -127,149 +489,121 @@
             </div>
         </section>
 
-        <!-- ============ Status Tab ============ -->
-        <section id="section-status" class="hidden animate-fade-in">
-            <div class="flex items-center space-x-2 mb-4">
-                <div class="relative flex-1">
-                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
-                    <input type="text" id="searchBar" placeholder="ค้นหาห้อง หรืออุปกรณ์..."
-                           class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+        <!-- ── Status Tab ── -->
+        <section id="section-status" class="hidden">
+            <p class="eyebrow">Repair Status</p>
+            <h2 class="section-title">สถานะการซ่อม</h2>
+
+            <div class="search-row">
+                <div class="search-wrap">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchBar" placeholder="ค้นหาห้อง หรืออุปกรณ์..." class="search-input">
                 </div>
-                <button onclick="loadStatus()" id="refresh-btn"
-                        class="bg-white border border-slate-200 rounded-xl p-3 shadow-sm text-slate-500 hover:text-blue-600 hover:border-blue-300 transition-all">
+                <button onclick="loadStatus()" id="refresh-btn" class="refresh-btn" aria-label="รีเฟรช">
                     <i class="fas fa-sync-alt"></i>
                 </button>
             </div>
 
-            <div class="flex space-x-2 mb-4 overflow-x-auto pb-1">
-                <button data-filter="" onclick="setFilter(this)"
-                        class="filter-chip whitespace-nowrap text-xs px-3 py-1.5 rounded-full bg-blue-600 text-white font-medium">ทั้งหมด</button>
-                <button data-filter="รอดำเนินการ" onclick="setFilter(this)"
-                        class="filter-chip whitespace-nowrap text-xs px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600">รอดำเนินการ</button>
-                <button data-filter="กำลังซ่อม" onclick="setFilter(this)"
-                        class="filter-chip whitespace-nowrap text-xs px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600">กำลังซ่อม</button>
-                <button data-filter="ซ่อมเสร็จ" onclick="setFilter(this)"
-                        class="filter-chip whitespace-nowrap text-xs px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600">ซ่อมเสร็จ</button>
+            <div class="filter-row">
+                <button data-filter="" onclick="setFilter(this)" class="filter-chip active">ทั้งหมด</button>
+                <button data-filter="รอดำเนินการ" onclick="setFilter(this)" class="filter-chip">รอดำเนินการ</button>
+                <button data-filter="กำลังซ่อม"   onclick="setFilter(this)" class="filter-chip">กำลังซ่อม</button>
+                <button data-filter="ซ่อมเสร็จ"   onclick="setFilter(this)" class="filter-chip">ซ่อมเสร็จ</button>
             </div>
 
-            <div id="status-list" class="space-y-3"></div>
+            <div id="status-list"></div>
         </section>
     </main>
 
     <!-- Toast -->
-    <div id="toast"
-         class="fixed bottom-8 left-1/2 -translate-x-1/2 px-5 py-3 rounded-full shadow-2xl text-white font-medium z-[100] flex items-center space-x-2 opacity-0 translate-y-8 pointer-events-none">
+    <div id="toast">
         <i id="toast-icon" class="fas fa-check-circle"></i>
         <span id="toast-message"></span>
     </div>
 
-    <!-- ============ Settings Modal ============ -->
-    <div id="settings-modal" class="fixed inset-0 bg-black/50 hidden z-[200] items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl">
-            <div class="flex items-center justify-between">
-                <h3 class="text-lg font-bold">ตั้งค่า GitHub</h3>
-                <button onclick="closeSettings()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100">
-                    <i class="fas fa-times text-xl"></i>
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal-overlay" onclick="onOverlayClick(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">ตั้งค่า GitHub</h3>
+                <button onclick="closeSettings()" class="close-btn" aria-label="ปิด">
+                    <i class="fas fa-times"></i>
                 </button>
             </div>
 
-            <!-- Setup guide -->
-            <div class="bg-slate-900 rounded-xl p-4 text-xs space-y-2">
-                <p class="text-slate-300 font-semibold mb-2"><i class="fab fa-github mr-1.5"></i>วิธีสร้าง Personal Access Token</p>
-                <ol class="list-decimal list-inside space-y-1.5 text-slate-400 leading-relaxed">
+            <div class="code-block">
+                <p class="code-block-head"><i class="fab fa-github"></i> วิธีสร้าง Personal Access Token</p>
+                <ol>
                     <li>GitHub → Settings → Developer settings</li>
-                    <li>Personal access tokens → <strong class="text-slate-300">Fine-grained tokens</strong></li>
-                    <li>Generate new token → ตั้งชื่อ → เลือก repo <strong class="text-slate-300">fixit-classroom</strong></li>
+                    <li>Personal access tokens → <strong>Fine-grained tokens</strong></li>
+                    <li>Generate new token → เลือก repo <strong>fixit-classroom</strong></li>
                     <li>Repository permissions:<br>
-                        <span class="text-emerald-400">• Issues: Read and write</span><br>
-                        <span class="text-emerald-400">• Contents: Read and write</span> (สำหรับรูปภาพ)
+                        <span class="green">• Issues: Read and write</span><br>
+                        <span class="green">• Contents: Read and write</span>
                     </li>
-                    <li>Generate → คัดลอก token มาใส่ด้านล่าง</li>
+                    <li>Generate → คัดลอก token มาวาง</li>
                 </ol>
             </div>
 
-            <div class="bg-slate-50 rounded-xl p-3 text-xs text-slate-500 flex items-center space-x-2">
-                <i class="fab fa-github text-slate-700 text-base"></i>
-                <span>ดึงข้อมูลจาก <strong class="text-slate-700">Bobbyboy081/fixit-classroom</strong> — ทุกเครื่องเห็นข้อมูลเดียวกัน</span>
+            <div class="repo-pill">
+                <i class="fab fa-github"></i>
+                <span>ดึงข้อมูลจาก <strong>Bobbyboy081/fixit-classroom</strong> — ทุกเครื่องเห็นข้อมูลเดียวกัน</span>
             </div>
 
-            <div>
-                <label class="block text-sm font-medium text-slate-600 mb-1">Personal Access Token <span class="text-slate-400">(ต้องการสำหรับส่งแจ้งซ่อม)</span></label>
-                <div class="relative">
-                    <input type="password" id="cfg-token" placeholder="github_pat_..."
-                           class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-sm font-mono transition-all pr-10">
-                    <button type="button" onclick="toggleTokenVisibility()"
-                            class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors">
-                        <i id="token-eye" class="fas fa-eye text-sm"></i>
+            <div class="mfield">
+                <label>Personal Access Token</label>
+                <div class="token-wrap">
+                    <input type="password" id="cfg-token" placeholder="github_pat_..." class="token-input">
+                    <button type="button" onclick="toggleTokenVisibility()" class="token-eye" aria-label="toggle visibility">
+                        <i id="token-eye" class="fas fa-eye"></i>
                     </button>
                 </div>
-                <p class="text-xs text-slate-400 mt-1">เครื่องที่ไม่มี Token ยังดูประวัติได้ แต่ส่งแจ้งซ่อมไม่ได้</p>
+                <p class="helper">เครื่องที่ไม่มี Token ยังดูประวัติได้ แต่ส่งแจ้งซ่อมไม่ได้</p>
             </div>
 
-            <div class="flex space-x-3">
-                <button onclick="setupLabels()"
-                        class="flex-1 border border-slate-300 text-slate-700 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-50 transition-colors">
-                    <i class="fas fa-tags mr-1"></i>สร้าง Labels
+            <div class="modal-actions">
+                <button onclick="setupLabels()" class="btn-outline">
+                    <i class="fas fa-tags"></i> สร้าง Labels
                 </button>
-                <button onclick="saveSettings()"
-                        class="flex-1 bg-blue-600 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-blue-700 transition-colors">
-                    <i class="fas fa-save mr-1"></i>บันทึก
+                <button onclick="saveSettings()" class="btn-dark">
+                    <i class="fas fa-save"></i> บันทึก
                 </button>
             </div>
 
-            <div class="border-t border-slate-100 pt-4">
-                <p class="text-xs text-slate-500">สถานะ: <span id="current-mode" class="font-semibold text-slate-700">ไม่มี Token</span></p>
+            <div class="modal-status">
+                สถานะ: <strong id="current-mode">ไม่มี Token</strong>
             </div>
         </div>
     </div>
 
-    <!-- ============ Image Lightbox ============ -->
-    <div id="lightbox" class="fixed inset-0 bg-black/85 hidden z-[400] items-center justify-center p-4" onclick="closeLightbox()">
-        <button class="absolute top-4 right-4 text-white text-2xl opacity-70 hover:opacity-100 transition-opacity">
+    <!-- Lightbox -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <button id="lightbox-close" onclick="closeLightbox(); event.stopPropagation()" aria-label="ปิด">
             <i class="fas fa-times"></i>
         </button>
-        <img id="lightbox-img" src="" alt="repair image"
-             class="max-w-full max-h-full rounded-xl object-contain shadow-2xl"/>
+        <img id="lightbox-img" src="" alt="repair image" onclick="event.stopPropagation()"/>
     </div>
 
 <script>
-// ============================================================
-//  CONFIG
-// ============================================================
+// ── Config ──────────────────────────────────────────────
 const REPO_OWNER = 'Bobbyboy081';
 const REPO_NAME  = 'fixit-classroom';
 const CFG_KEY    = 'fixit_gh_config';
 const GH_API     = 'https://api.github.com';
 
-function getConfig() {
-    return JSON.parse(localStorage.getItem(CFG_KEY) || '{}');
-}
-function saveConfig(cfg) {
-    localStorage.setItem(CFG_KEY, JSON.stringify(cfg));
-}
-function hasWriteToken() {
-    return !!(getConfig().token);
-}
+function getConfig() { return JSON.parse(localStorage.getItem(CFG_KEY) || '{}'); }
+function saveConfig(cfg) { localStorage.setItem(CFG_KEY, JSON.stringify(cfg)); }
+function hasWriteToken() { return !!(getConfig().token); }
 
-// ============================================================
-//  GITHUB API
-// ============================================================
-// GET requests ไม่ต้องใช้ token (public repo)
+// ── GitHub API ───────────────────────────────────────────
 async function ghGet(path) {
     const res = await fetch(GH_API + path, {
-        headers: {
-            'Accept': 'application/vnd.github+json',
-            'X-GitHub-Api-Version': '2022-11-28'
-        }
+        headers: { 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' }
     });
-    if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.message || `HTTP ${res.status}`);
-    }
+    if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.message || `HTTP ${res.status}`); }
     return res.json();
 }
 
-// POST/PUT ต้องใช้ token
 async function ghWrite(method, path, body) {
     const { token } = getConfig();
     if (!token) throw new Error('ยังไม่ได้ตั้งค่า Token กรุณากด ⚙️');
@@ -283,10 +617,7 @@ async function ghWrite(method, path, body) {
         },
         body: JSON.stringify(body)
     });
-    if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.message || `HTTP ${res.status}`);
-    }
+    if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.message || `HTTP ${res.status}`); }
     return res.json();
 }
 
@@ -294,8 +625,7 @@ async function uploadImage(base64DataUrl, timestamp) {
     const base64 = base64DataUrl.split(',')[1];
     const path   = `images/Repair_${timestamp}.jpg`;
     await ghWrite('PUT', `/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
-        message: `repair image ${timestamp}`,
-        content: base64
+        message: `repair image ${timestamp}`, content: base64
     });
     return `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${path}`;
 }
@@ -308,44 +638,27 @@ async function createIssue({ equipment, room, reporter, note, imageUrl }) {
         `**อาการ:** ${note || 'ไม่ระบุ'}`
     ];
     if (imageUrl) lines.push(`\n![รูปประกอบ](${imageUrl})`);
-
     return ghWrite('POST', `/repos/${REPO_OWNER}/${REPO_NAME}/issues`, {
-        title:  `[${equipment}] ห้อง ${room}`,
-        body:   lines.join('\n'),
-        labels: ['รอดำเนินการ']
+        title: `[${equipment}] ห้อง ${room}`, body: lines.join('\n'), labels: ['รอดำเนินการ']
     });
 }
 
 async function fetchIssues() {
-    // ไม่ต้องใช้ token — อ่านได้จากทุกเครื่อง
     const issues = await ghGet(`/repos/${REPO_OWNER}/${REPO_NAME}/issues?state=all&per_page=100`);
     return issues.map(parseIssue);
 }
 
 function parseIssue(issue) {
-    const body = issue.body || '';
-    const field = (label) => {
-        const m = body.match(new RegExp(`\\*\\*${label}:\\*\\*\\s*(.+)`));
-        return m ? m[1].trim() : '';
-    };
-    const imgMatch = body.match(/!\[รูปประกอบ\]\((.+?)\)/);
-
-    let status = 'รอดำเนินการ';
-    if (issue.state === 'closed') {
-        status = 'ซ่อมเสร็จ';
-    } else if (issue.labels.some(l => l.name === 'กำลังซ่อม')) {
-        status = 'กำลังซ่อม';
-    }
-
+    const body  = issue.body || '';
+    const field = (label) => { const m = body.match(new RegExp(`\\*\\*${label}:\\*\\*\\s*(.+)`)); return m ? m[1].trim() : ''; };
+    const imgM  = body.match(/!\[รูปประกอบ\]\((.+?)\)/);
+    let status  = 'รอดำเนินการ';
+    if (issue.state === 'closed') status = 'ซ่อมเสร็จ';
+    else if (issue.labels.some(l => l.name === 'กำลังซ่อม')) status = 'กำลังซ่อม';
     return {
-        date:      issue.created_at,
-        equipment: field('อุปกรณ์'),
-        room:      field('ห้อง'),
-        reporter:  field('ผู้แจ้ง'),
-        note:      field('อาการ'),
-        imageUrl:  imgMatch ? imgMatch[1] : '',
-        status,
-        url:       issue.html_url
+        date: issue.created_at, equipment: field('อุปกรณ์'), room: field('ห้อง'),
+        reporter: field('ผู้แจ้ง'), note: field('อาการ'),
+        imageUrl: imgM ? imgM[1] : '', status, url: issue.html_url
     };
 }
 
@@ -365,26 +678,20 @@ async function setupLabels() {
     showToast(`สร้าง ${ok} labels${dup ? ` (${dup} มีอยู่แล้ว)` : ''}`);
 }
 
-
-// ============================================================
-//  IMAGE HANDLING
-// ============================================================
+// ── Image ────────────────────────────────────────────────
 let base64Image = '';
 
 function previewImage(input) {
     if (!input.files || !input.files[0]) return;
-    if (input.files[0].size > 5 * 1024 * 1024) {
-        showToast('รูปใหญ่เกิน 5 MB', 'error');
-        input.value = '';
-        return;
-    }
+    if (input.files[0].size > 5 * 1024 * 1024) { showToast('รูปใหญ่เกิน 5 MB', 'error'); input.value = ''; return; }
     const reader = new FileReader();
     reader.onload = (ev) => {
         base64Image = ev.target.result;
-        document.getElementById('preview-img').src = base64Image;
-        document.getElementById('preview-img').classList.remove('hidden');
+        const img = document.getElementById('preview-img');
+        img.src = base64Image;
+        img.classList.remove('hidden');
         document.getElementById('upload-placeholder').classList.add('hidden');
-        document.getElementById('remove-img-btn').classList.remove('hidden');
+        document.getElementById('remove-img-btn').style.display = 'block';
     };
     reader.readAsDataURL(input.files[0]);
 }
@@ -392,18 +699,15 @@ function previewImage(input) {
 function clearImage() {
     base64Image = '';
     document.getElementById('imageInput').value = '';
-    document.getElementById('preview-img').src = '';
-    document.getElementById('preview-img').classList.add('hidden');
+    const img = document.getElementById('preview-img');
+    img.src = ''; img.classList.add('hidden');
     document.getElementById('upload-placeholder').classList.remove('hidden');
-    document.getElementById('remove-img-btn').classList.add('hidden');
+    document.getElementById('remove-img-btn').style.display = 'none';
 }
 
-// ============================================================
-//  FORM SUBMIT
-// ============================================================
+// ── Form Submit ──────────────────────────────────────────
 document.getElementById('repairForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-
     const equipment = document.getElementById('equipment').value.trim();
     const room      = document.getElementById('room').value.trim();
     const reporter  = document.getElementById('reporter').value.trim();
@@ -412,19 +716,15 @@ document.getElementById('repairForm').addEventListener('submit', async (e) => {
     let hasError = false;
     [['equipment', equipment], ['room', room], ['reporter', reporter]].forEach(([id, val]) => {
         const el = document.getElementById('err-' + id);
-        if (!val) { el.classList.remove('hidden'); hasError = true; }
-        else       { el.classList.add('hidden'); }
+        if (!val) { el.classList.add('show'); hasError = true; }
+        else       { el.classList.remove('show'); }
     });
     if (hasError) return;
 
     setLoading(true);
-
     try {
         let imageUrl = '';
-        if (base64Image) {
-            showToast('กำลังอัพโหลดรูปภาพ...');
-            imageUrl = await uploadImage(base64Image, Date.now());
-        }
+        if (base64Image) { showToast('กำลังอัพโหลดรูปภาพ...'); imageUrl = await uploadImage(base64Image, Date.now()); }
         await createIssue({ equipment, room, reporter, note, imageUrl });
         showToast('ส่งคำแจ้งซ่อมเรียบร้อย!');
         resetForm();
@@ -433,54 +733,40 @@ document.getElementById('repairForm').addEventListener('submit', async (e) => {
     } catch (err) {
         showToast(err.message, 'error');
     }
-
     setLoading(false);
 });
 
 function resetForm() {
     document.getElementById('repairForm').reset();
     clearImage();
-    ['equipment', 'room', 'reporter'].forEach(id =>
-        document.getElementById('err-' + id).classList.add('hidden')
-    );
+    ['equipment', 'room', 'reporter'].forEach(id => document.getElementById('err-' + id).classList.remove('show'));
 }
 
-// ============================================================
-//  STATUS LIST
-// ============================================================
+// ── Status List ──────────────────────────────────────────
 let cachedData   = [];
 let activeFilter = '';
 
 async function loadStatus() {
     showListLoading();
-    try {
-        cachedData = await fetchIssues();
-    } catch (err) {
-        showToast('โหลดไม่สำเร็จ: ' + err.message, 'error');
-        cachedData = [];
-    }
+    try { cachedData = await fetchIssues(); }
+    catch (err) { showToast('โหลดไม่สำเร็จ: ' + err.message, 'error'); cachedData = []; }
     renderList();
 }
 
 function renderList() {
     const listEl     = document.getElementById('status-list');
     const searchTerm = document.getElementById('searchBar').value.toLowerCase().trim();
-
-    const filtered = cachedData.filter(item => {
-        const matchFilter = !activeFilter || item.status === activeFilter;
-        const matchSearch = !searchTerm ||
+    const filtered   = cachedData.filter(item => {
+        const mf = !activeFilter || item.status === activeFilter;
+        const ms = !searchTerm ||
             (item.equipment || '').toLowerCase().includes(searchTerm) ||
             (item.room      || '').toLowerCase().includes(searchTerm) ||
             (item.reporter  || '').toLowerCase().includes(searchTerm);
-        return matchFilter && matchSearch;
+        return mf && ms;
     });
-
     listEl.innerHTML = '';
     if (filtered.length === 0) {
-        const el = document.createElement('div');
-        el.className = 'text-center py-14 text-slate-400';
-        el.innerHTML = '<i class="fas fa-inbox text-4xl mb-3 block"></i><p>ไม่พบรายการ</p>';
-        listEl.appendChild(el);
+        listEl.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>ไม่พบรายการ</p></div>';
         return;
     }
     filtered.forEach((item, idx) => listEl.appendChild(createCard(item, idx)));
@@ -488,60 +774,50 @@ function renderList() {
 
 function createCard(item, idx) {
     const card = document.createElement('div');
-    card.className = 'bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 animate-fade-in';
-    card.style.animationDelay = Math.min(idx * 40, 300) + 'ms';
+    card.className = 'repair-card fade-up';
+    card.style.animationDelay = Math.min(idx * 40, 280) + 'ms';
 
-    const statusStyles = {
-        'รอดำเนินการ': 'bg-amber-100 text-amber-700',
-        'กำลังซ่อม':   'bg-blue-100 text-blue-700',
-        'ซ่อมเสร็จ':   'bg-emerald-100 text-emerald-700'
-    };
-    const statusCls = statusStyles[item.status] || 'bg-slate-100 text-slate-500';
+    const badgeClass = { 'รอดำเนินการ': 'badge-pending', 'กำลังซ่อม': 'badge-progress', 'ซ่อมเสร็จ': 'badge-done' }[item.status] || 'badge-pending';
 
     // Top row
     const top = document.createElement('div');
-    top.className = 'flex items-start space-x-3';
+    top.className = 'rc-top';
 
     const iconBox = document.createElement('div');
-    iconBox.className = 'bg-slate-50 p-3 rounded-xl flex-shrink-0';
-    iconBox.innerHTML = `<i class="fas ${getIcon(item.equipment)} text-slate-400 text-lg"></i>`;
+    iconBox.className = 'rc-icon';
+    iconBox.innerHTML = `<i class="fas ${getIcon(item.equipment)}"></i>`;
 
     const info = document.createElement('div');
-    info.className = 'flex-1 min-w-0';
+    info.className = 'rc-info';
 
     const titleRow = document.createElement('div');
-    titleRow.className = 'flex justify-between items-start gap-2';
+    titleRow.className = 'rc-title-row';
 
-    const titleEl = document.createElement('h3');
-    titleEl.className = 'font-semibold text-slate-800 leading-snug';
-    titleEl.textContent = `${item.equipment} — ${item.room}`;
+    const title = document.createElement('h3');
+    title.className = 'rc-title';
+    title.textContent = `${item.equipment} — ${item.room}`;
 
     const badge = document.createElement('span');
-    badge.className = `flex-shrink-0 text-xs px-2.5 py-0.5 rounded-full font-medium ${statusCls}`;
+    badge.className = `status-badge ${badgeClass}`;
     badge.textContent = item.status || 'รอดำเนินการ';
 
-    titleRow.appendChild(titleEl);
-    titleRow.appendChild(badge);
+    titleRow.append(title, badge);
 
     const noteEl = document.createElement('p');
-    noteEl.className = 'text-sm text-slate-500 mt-1 leading-relaxed';
+    noteEl.className = 'rc-note';
     noteEl.textContent = item.note || 'ไม่มีรายละเอียดเพิ่มเติม';
 
-    info.appendChild(titleRow);
-    info.appendChild(noteEl);
-    top.appendChild(iconBox);
-    top.appendChild(info);
+    info.append(titleRow, noteEl);
+    top.append(iconBox, info);
     card.appendChild(top);
 
     // Image
     const imageUrl = (item.imageUrl || '').trim();
     if (imageUrl && imageUrl !== 'ไม่มีรูป') {
         const imgWrap = document.createElement('div');
-        imgWrap.className = 'w-full h-40 rounded-xl overflow-hidden cursor-pointer bg-slate-100';
+        imgWrap.className = 'rc-img';
         const img = document.createElement('img');
-        img.alt = 'repair image';
-        img.loading = 'lazy';
-        img.className = 'w-full h-full object-cover hover:scale-105 transition-transform duration-200';
+        img.alt = 'repair image'; img.loading = 'lazy';
         img.onerror = () => imgWrap.remove();
         img.addEventListener('click', () => openLightbox(imageUrl));
         img.src = imageUrl;
@@ -551,72 +827,53 @@ function createCard(item, idx) {
 
     // Footer
     const footer = document.createElement('div');
-    footer.className = 'flex items-center justify-between pt-2 border-t border-slate-50';
+    footer.className = 'rc-footer';
 
     const userEl = document.createElement('span');
-    userEl.className = 'text-[11px] text-slate-400 flex items-center gap-1';
-    userEl.innerHTML = '<i class="fas fa-user"></i>';
-    userEl.appendChild(document.createTextNode(item.reporter || 'ไม่ระบุ'));
+    userEl.className = 'rc-meta';
+    userEl.innerHTML = `<i class="fas fa-user"></i>${item.reporter || 'ไม่ระบุ'}`;
 
     const dateEl = document.createElement('span');
-    dateEl.className = 'text-[11px] text-slate-400 flex items-center gap-1';
-    dateEl.innerHTML = '<i class="fas fa-calendar-alt"></i>';
-    dateEl.appendChild(document.createTextNode(formatDate(item.date)));
+    dateEl.className = 'rc-meta';
+    dateEl.innerHTML = `<i class="fas fa-calendar-alt"></i>${formatDate(item.date)}`;
 
-    footer.appendChild(userEl);
-    footer.appendChild(dateEl);
+    footer.append(userEl, dateEl);
     card.appendChild(footer);
-
     return card;
 }
 
 function showListLoading() {
-    const el = document.getElementById('status-list');
-    el.innerHTML = '';
-    const loader = document.createElement('div');
-    loader.className = 'text-center py-14 text-slate-400';
-    loader.innerHTML = '<i class="fas fa-circle-notch fa-spin text-3xl mb-3 block text-blue-400"></i><p>กำลังโหลด...</p>';
-    el.appendChild(loader);
+    document.getElementById('status-list').innerHTML =
+        '<div class="loading-state"><i class="fas fa-circle-notch fa-spin"></i><p>กำลังโหลด...</p></div>';
 }
 
-// ============================================================
-//  FILTER
-// ============================================================
+// ── Filter ───────────────────────────────────────────────
 function setFilter(btn) {
     activeFilter = btn.dataset.filter;
-    document.querySelectorAll('.filter-chip').forEach(chip => {
-        const active = chip === btn;
-        chip.className = `filter-chip whitespace-nowrap text-xs px-3 py-1.5 rounded-full font-medium transition-all ${
-            active ? 'bg-blue-600 text-white' : 'bg-white border border-slate-200 text-slate-600'
-        }`;
-    });
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.toggle('active', c === btn));
     renderList();
 }
 
-// ============================================================
-//  LIGHTBOX
-// ============================================================
+// ── Lightbox ─────────────────────────────────────────────
 function openLightbox(url) {
     document.getElementById('lightbox-img').src = url;
-    document.getElementById('lightbox').classList.replace('hidden', 'flex');
+    document.getElementById('lightbox').classList.add('open');
 }
 function closeLightbox() {
-    document.getElementById('lightbox').classList.replace('flex', 'hidden');
+    document.getElementById('lightbox').classList.remove('open');
     document.getElementById('lightbox-img').src = '';
 }
 
-// ============================================================
-//  SETTINGS
-// ============================================================
+// ── Settings ─────────────────────────────────────────────
 function openSettings() {
     const { token = '' } = getConfig();
     document.getElementById('cfg-token').value = token;
     document.getElementById('current-mode').textContent = hasWriteToken() ? 'มี Token (ส่งแจ้งซ่อมได้)' : 'ไม่มี Token (ดูอย่างเดียว)';
-    document.getElementById('settings-modal').classList.replace('hidden', 'flex');
+    document.getElementById('settings-modal').classList.add('open');
 }
-function closeSettings() {
-    document.getElementById('settings-modal').classList.replace('flex', 'hidden');
-}
+function closeSettings() { document.getElementById('settings-modal').classList.remove('open'); }
+function onOverlayClick(e) { if (e.target === e.currentTarget) closeSettings(); }
+
 function saveSettings() {
     const token = document.getElementById('cfg-token').value.trim();
     saveConfig({ token });
@@ -627,63 +884,45 @@ function saveSettings() {
 function toggleTokenVisibility() {
     const input = document.getElementById('cfg-token');
     const icon  = document.getElementById('token-eye');
-    if (input.type === 'password') {
-        input.type = 'text';
-        icon.className = 'fas fa-eye-slash text-sm';
-    } else {
-        input.type = 'password';
-        icon.className = 'fas fa-eye text-sm';
-    }
+    const show  = input.type === 'password';
+    input.type  = show ? 'text' : 'password';
+    icon.className = `fas fa-eye${show ? '-slash' : ''} `;
 }
-
 function updateConnectionBadge() {
     const badge = document.getElementById('connection-badge');
     if (hasWriteToken()) {
         badge.textContent = '● ส่งแจ้งซ่อมได้';
-        badge.className   = 'text-[10px] text-emerald-500 font-medium';
+        badge.style.color = '#30d158';
     } else {
-        badge.textContent = '● ดูประวัติ (ยังไม่มี Token)';
-        badge.className   = 'text-[10px] text-amber-500 font-medium';
+        badge.textContent = '● ยังไม่มี Token';
+        badge.style.color = 'var(--ink3)';
     }
 }
 
-// ============================================================
-//  TAB
-// ============================================================
+// ── Tab ──────────────────────────────────────────────────
 function switchTab(tab) {
     const isReport = tab === 'report';
     document.getElementById('section-report').classList.toggle('hidden', !isReport);
-    document.getElementById('section-status').classList.toggle('hidden', isReport);
-    document.getElementById('tab-report').className = `flex-1 py-3 font-medium text-center transition-all ${isReport ? 'tab-active' : 'text-slate-500'}`;
-    document.getElementById('tab-status').className  = `flex-1 py-3 font-medium text-center transition-all ${!isReport ? 'tab-active' : 'text-slate-500'}`;
+    document.getElementById('section-status').classList.toggle('hidden',  isReport);
+    document.getElementById('tab-report').classList.toggle('active',  isReport);
+    document.getElementById('tab-status').classList.toggle('active', !isReport);
     if (!isReport) loadStatus();
 }
 
-// ============================================================
-//  HELPERS
-// ============================================================
+// ── Helpers ───────────────────────────────────────────────
 function setLoading(on) {
-    const spinner = document.getElementById('loading-spinner');
-    const btn     = document.getElementById('submit-btn');
-    spinner.classList.toggle('hidden', !on);
+    document.getElementById('loading-spinner').classList.toggle('hidden', !on);
+    const btn = document.getElementById('submit-btn');
     btn.disabled = on;
-    if (on) {
-        btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i><span>กำลังส่ง...</span>';
-        btn.className = 'w-full bg-slate-400 text-white font-semibold py-4 rounded-xl transition-all flex items-center justify-center space-x-2 cursor-not-allowed';
-    } else {
-        btn.innerHTML = '<i class="fas fa-paper-plane"></i><span>ส่งคำแจ้งซ่อม</span>';
-        btn.className = 'w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold py-4 rounded-xl shadow-md shadow-blue-200 transition-all flex items-center justify-center space-x-2';
-    }
+    btn.innerHTML = on
+        ? '<i class="fas fa-circle-notch fa-spin"></i><span>กำลังส่ง...</span>'
+        : '<i class="fas fa-paper-plane"></i><span>ส่งคำแจ้งซ่อม</span>';
 }
 
-function getIcon(equipment) {
-    const map = {
-        'พัดลม': 'fa-fan', 'หน้าต่าง': 'fa-window-maximize', 'ประตู': 'fa-door-open',
-        'โต๊ะ': 'fa-border-all', 'เก้าอี้': 'fa-chair',
-        'หลอดไฟ / ไฟฟ้า': 'fa-lightbulb', 'เครื่องปรับอากาศ': 'fa-snowflake',
-        'โปรเจคเตอร์ / ทีวี': 'fa-video'
-    };
-    return map[equipment] || 'fa-tools';
+function getIcon(eq) {
+    return { 'พัดลม': 'fa-fan', 'หน้าต่าง': 'fa-window-maximize', 'ประตู': 'fa-door-open',
+             'โต๊ะ': 'fa-border-all', 'เก้าอี้': 'fa-chair', 'หลอดไฟ / ไฟฟ้า': 'fa-lightbulb',
+             'เครื่องปรับอากาศ': 'fa-snowflake', 'โปรเจคเตอร์ / ทีวี': 'fa-video' }[eq] || 'fa-tools';
 }
 
 function formatDate(date) {
@@ -698,19 +937,14 @@ function showToast(message, type = 'success') {
     const toast = document.getElementById('toast');
     document.getElementById('toast-message').textContent = message;
     document.getElementById('toast-icon').className = `fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}`;
-    toast.className = `fixed bottom-8 left-1/2 -translate-x-1/2 px-5 py-3 rounded-full shadow-2xl text-white font-medium z-[100] flex items-center space-x-2 transition-all duration-300 opacity-100 translate-y-0 ${
-        type === 'success' ? 'bg-emerald-500' : 'bg-rose-500'
-    }`;
-    toastTimer = setTimeout(() => {
-        toast.className = toast.className.replace('opacity-100 translate-y-0', 'opacity-0 translate-y-8');
-    }, 3000);
+    toast.style.background = type === 'success' ? '#1d1d1f' : '#ff3b30';
+    toast.classList.add('show');
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
 }
 
 function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-// ============================================================
-//  INIT
-// ============================================================
+// ── Init ─────────────────────────────────────────────────
 document.getElementById('searchBar').addEventListener('input', renderList);
 updateConnectionBadge();
 loadStatus();
